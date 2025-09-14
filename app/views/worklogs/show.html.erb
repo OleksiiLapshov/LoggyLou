@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @worklog %>
+
+<div>
+  <%= link_to "Edit this worklog", edit_worklog_path(@worklog) %> |
+  <%= link_to "Back to worklogs", worklogs_path %>
+
+  <%= button_to "Destroy this worklog", @worklog, method: :delete %>
+</div>

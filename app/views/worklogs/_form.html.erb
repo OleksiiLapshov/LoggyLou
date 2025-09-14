@@ -1,0 +1,43 @@
+<%= form_with(model: worklog) do |form| %>
+  <% if worklog.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(worklog.errors.count, "error") %> prohibited this worklog from being saved:</h2>
+
+      <ul>
+        <% worklog.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :employee, style: "display: block" %>
+    <%= form.text_field :employee %>
+  </div>
+
+  <div>
+    <%= form.label :hours, style: "display: block" %>
+    <%= form.text_field :hours %>
+  </div>
+
+  <div>
+    <%= form.label :note, style: "display: block" %>
+    <%= form.textarea :note %>
+  </div>
+
+  <div>
+    <%= form.label :project_id, style: "display: block" %>
+    <%= form.collection_select :project_id, @projects, :id, :name, { prompt: "Select a Project" },
+    { class: "form-control"} %>
+  </div>
+
+  <div>
+    <%= form.label :log_date, style: "display: block" %>
+    <%= form.date_field :log_date %>
+  </div>
+
+  <div>
+    <%= form.submit "Post Worklog" %>
+  </div>
+<% end %>
