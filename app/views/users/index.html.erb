@@ -1,0 +1,18 @@
+<h1>Employees</h1>
+<br><hr>
+
+<div>
+    <ul>
+        <% @users.each do |u| %>
+            <li>
+                <p><%= u.first_name %> <%= u.last_name %></p>
+                <%= link_to u.email, u %>
+            </li>
+        <% end %>
+    </ul>
+</div>
+<br><hr>
+
+<section>
+    <%= link_to "Register New Employee", new_user_path %>
+</section>

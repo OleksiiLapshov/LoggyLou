@@ -1,0 +1,17 @@
+<h1>Employee details</h1>
+<p style="color: green"><%= notice %></p>
+
+<ul>
+    <li>
+        <h3>Name: </h3>
+        <%= @user.first_name %> <%= @user.last_name %>
+    </li>
+    <li>
+        <h3>Email: </h3>
+        <p><%= @user.email %></p>
+    </li>
+    <li>
+        <h3>Created:</h3>
+        <p><%= @user.created_at %></p>
+    </li>
+</ul>
