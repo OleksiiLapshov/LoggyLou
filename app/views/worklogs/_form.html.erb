@@ -10,34 +10,60 @@
       </ul>
     </div>
   <% end %>
-
   <div>
-    <%= form.label :employee, style: "display: block" %>
-    <%= form.text_field :employee %>
-  </div>
+    <div class="flex gap-4 py-2 items-center">
+      <%= form.label :employee, style: "display: block", class: "font-bold min-w-[120px]" %>
+      <%= form.text_field :employee, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
+      <% if worklog.errors[:employee].any? %>
+        <div class="text-red-600">
+          <%= worklog.errors[:employee].first %>
+        </div>
+      <% end %>
+    </div>
 
-  <div>
-    <%= form.label :hours, style: "display: block" %>
-    <%= form.text_field :hours %>
-  </div>
+    <div class="flex gap-4 py-2 items-center">
+      <%= form.label :hours, style: "display: block", class: "font-bold min-w-[120px]" %>
+      <%= form.text_field :hours, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
+      <% if worklog.errors[:hours].any? %>
+        <div class="text-red-600">
+          <%= worklog.errors[:hours].first %>
+        </div>
+      <% end %>
+    </div>
 
-  <div>
-    <%= form.label :note, style: "display: block" %>
-    <%= form.textarea :note %>
-  </div>
+    <div class="flex gap-4 py-2">
+      <%= form.label :note, style: "display: block", class: "font-bold min-w-[120px]" %>
+      <%= form.textarea :note, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
+      <% if worklog.errors[:note].any? %>
+        <div class="text-red-600">
+          <%= worklog.errors[:note].first %>
+        </div>
+      <% end %>
+    </div>
 
-  <div>
-    <%= form.label :project_id, style: "display: block" %>
-    <%= form.collection_select :project_id, @projects, :id, :name, { prompt: "Select a Project" },
-    { class: "form-control"} %>
-  </div>
+    <div class="flex gap-4 py-2">
+      <%= form.label :project_id, style: "display: block", class: "font-bold min-w-[120px]" %>
+      <%= form.collection_select :project_id, @projects, :id, :name, { prompt: "Select a Project" },
+      { class: "form-control rounded-sm border border-zinc-900 bg-zinc-200"} %>
+      <% if worklog.errors[:project_id].any? %>
+        <div class="text-red-600">
+          <%= worklog.errors[:project_id].first %>
+        </div>
+      <% end %>
+    </div>
 
-  <div>
-    <%= form.label :log_date, style: "display: block" %>
-    <%= form.date_field :log_date %>
-  </div>
+    <div class="flex gap-4 py-2">
+      <%= form.label :log_date, style: "display: block", class: "font-bold min-w-[120px]" %>
+      <%= form.date_field :log_date, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
+      <% if worklog.errors[:log_date].any? %>
+        <div class="text-red-600">
+          <%= worklog.errors[:log_date].first %>
+        </div>
+      <% end %>
+    </div>
 
-  <div>
-    <%= form.submit "Post Worklog" %>
+    <div>
+      <%= form.submit "Post Worklog", class: "button-success" %>
+    </div>
   </div>
 <% end %>

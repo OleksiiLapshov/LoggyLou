@@ -5,4 +5,48 @@
         @apply block flex h-full cursor-pointer font-bold text-zinc-200 hover:text-zinc-200 
         hover:bg-white/15 transition-colors ease-in-out p-6;
     }
+
+    .button {
+        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md
+           text-white bg-orange-400 hover:bg-orange-500 focus:outline-none focus:ring-2 
+           focus:ring-orange-500 focus:ring-offset-2 transition-colors duration-200 
+           cursor-pointer no-underline;
+    }
+
+    .button-secondary {
+        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md
+           text-orange-700 bg-orange-100 hover:bg-orange-200 focus:outline-none focus:ring-2 
+           focus:ring-orange-500 focus:ring-offset-2 transition-colors duration-200 
+           cursor-pointer no-underline border border-orange-300;
+    }
+
+    .button-outline {
+        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md
+           text-orange-600 bg-transparent hover:bg-orange-50 focus:outline-none focus:ring-2 
+           focus:ring-orange-500 focus:ring-offset-2 transition-colors duration-200 
+           cursor-pointer no-underline border-2 border-orange-400 hover:border-orange-500;
+    }
+
+    .button-small {
+        @apply px-3 py-1 text-xs;
+    }
+
+    .button-large {
+        @apply px-6 py-3 text-base;
+    }
+
+    .button-danger {
+        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md
+           text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 
+           focus:ring-red-500 focus:ring-offset-2 transition-colors duration-200 
+           cursor-pointer no-underline;
+    }
+
+    .button-success {
+        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md
+           text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 
+           focus:ring-green-500 focus:ring-offset-2 transition-colors duration-200 
+           cursor-pointer no-underline;
+    }
+
 }

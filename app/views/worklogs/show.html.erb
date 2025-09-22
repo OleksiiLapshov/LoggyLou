@@ -3,8 +3,8 @@
 <%= render @worklog %>
 
 <div>
-  <%= link_to "Edit this worklog", edit_worklog_path(@worklog) %> |
-  <%= link_to "Back to worklogs", worklogs_path %>
+  <%= link_to "Edit this worklog", edit_worklog_path(@worklog), class: "button" %> |
+  <%= link_to "Back to worklogs", worklogs_path, class: "button-secondary" %>
 
-  <%= button_to "Destroy this worklog", @worklog, method: :delete %>
+  <%= button_to "Destroy this worklog", @worklog, method: :delete, class: "button-danger" %>
 </div>

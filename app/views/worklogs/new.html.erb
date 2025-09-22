@@ -1,11 +1,11 @@
 <% content_for :title, "New worklog" %>
 
-<h1>New worklog</h1>
+<h1 class="text-3xl font-bold text-zinc-700 mb-6">New worklog</h1>
 
 <%= render "form", worklog: @worklog %>
 
 <br>
 
 <div>
-  <%= link_to "Back to worklogs", worklogs_path %>
+  <%= link_to "Back to worklogs", worklogs_path, class: "button-secondary" %>
 </div>
