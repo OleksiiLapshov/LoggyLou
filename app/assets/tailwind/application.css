@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+@layer components {
+    .menu-item{
+        @apply block flex h-full cursor-pointer font-bold text-zinc-200 hover:text-zinc-200 
+        hover:bg-white/15 transition-colors ease-in-out p-6;
+    }
+}
