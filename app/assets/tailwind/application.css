@@ -49,4 +49,9 @@
            cursor-pointer no-underline;
     }
 
+    .form-card {
+        @apply max-w-md mx-auto mt-10 p-6 bg-white/50 backdrop-blur-md rounded-2xl 
+            border border-white/20 shadow-lg;
+    }
+
 }
