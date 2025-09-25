@@ -1,17 +1,15 @@
-<h1>Employee details</h1>
+<h1  class="text-3xl font-bold text-zinc-700 my-6 ml-6">Employee details</h1>
 <p style="color: green"><%= notice %></p>
 
-<ul>
-    <li>
-        <h3>Name: </h3>
-        <%= @user.first_name %> <%= @user.last_name %>
-    </li>
-    <li>
-        <h3>Email: </h3>
-        <p><%= @user.email %></p>
-    </li>
-    <li>
-        <h3>Created:</h3>
-        <p><%= @user.created_at %></p>
-    </li>
-</ul>
+<div class="form-card">
+    <h3 class="font-bold text-md">Name: </h3>
+    <%= @user.first_name %> <%= @user.last_name %>
+
+    <h3 class="font-bold text-md pt-2">Email: </h3>
+    <p><%= @user.email %></p>
+
+    <h3 class="font-bold text-md pt-2">Created:</h3>
+    <p><%= @user.created_at %></p>
+
+    <%= link_to "Back", users_path, class: "button-secondary mt-4" %>
+</div>

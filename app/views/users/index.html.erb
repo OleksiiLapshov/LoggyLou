@@ -1,18 +1,17 @@
-<h1>Employees</h1>
-<br><hr>
+<h1 class="text-3xl font-bold text-zinc-700 my-6 ml-6">Employees</h1>
 
 <div>
     <ul>
         <% @users.each do |u| %>
-            <li>
-                <p><%= u.first_name %> <%= u.last_name %></p>
-                <%= link_to u.email, u %>
+            <li  class="form-card">
+                <p>Name: <%= u.first_name %> <%= u.last_name %></p>
+                Email: <%= link_to u.email, u %> | 
+                <%= link_to "View employee", u, class: "button-secondary mt-2" %>
             </li>
         <% end %>
     </ul>
 </div>
-<br><hr>
 
-<section>
-    <%= link_to "Register New Employee", new_user_path %>
+<section class="my-6 ml-6">
+    <%= link_to "Register New Employee", new_user_path, class: "button-success" %>
 </section>

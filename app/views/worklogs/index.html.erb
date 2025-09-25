@@ -2,15 +2,18 @@
 
 <% content_for :title, "Worklogs" %>
 
-<h1>Worklogs</h1>
+<h1 class="text-3xl font-bold text-zinc-700 my-6 ml-6">Worklogs</h1>
 
-<div id="worklogs">
+<div id="worklogs" class="form-card space-y-6">
   <% @worklogs.each do |worklog| %>
     <%= render worklog %>
-    <p>
-      <%= link_to "Show this worklog", worklog, class: "button-secondary" %>
+    <p class="mt-4">
+      <%= link_to "View worklog", worklog, class: "button-secondary" %> | 
+      <%= link_to "Edit worklog", edit_worklog_path(worklog), class: "button" %>
     </p>
+    <hr>
   <% end %>
 </div>
 
-<%= link_to "New worklog", new_worklog_path, class: "button" %>
+<%= link_to "New worklog", new_worklog_path, class: "button-success ml-6 my-6" %>
+

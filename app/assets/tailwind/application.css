@@ -7,21 +7,21 @@
     }
 
     .button {
-        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md
+        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-bold rounded-md
            text-white bg-orange-400 hover:bg-orange-500 focus:outline-none focus:ring-2 
            focus:ring-orange-500 focus:ring-offset-2 transition-colors duration-200 
            cursor-pointer no-underline;
     }
 
     .button-secondary {
-        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md
+        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-bold rounded-md
            text-orange-700 bg-orange-100 hover:bg-orange-200 focus:outline-none focus:ring-2 
            focus:ring-orange-500 focus:ring-offset-2 transition-colors duration-200 
            cursor-pointer no-underline border border-orange-300;
     }
 
     .button-outline {
-        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md
+        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-bold rounded-md
            text-orange-600 bg-transparent hover:bg-orange-50 focus:outline-none focus:ring-2 
            focus:ring-orange-500 focus:ring-offset-2 transition-colors duration-200 
            cursor-pointer no-underline border-2 border-orange-400 hover:border-orange-500;
@@ -36,21 +36,21 @@
     }
 
     .button-danger {
-        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md
+        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-bold rounded-md
            text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 
            focus:ring-red-500 focus:ring-offset-2 transition-colors duration-200 
            cursor-pointer no-underline;
     }
 
     .button-success {
-        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md
+        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-bold rounded-md
            text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 
            focus:ring-green-500 focus:ring-offset-2 transition-colors duration-200 
            cursor-pointer no-underline;
     }
 
     .form-card {
-        @apply max-w-md mx-auto mt-10 p-6 bg-white/50 backdrop-blur-md rounded-2xl 
+        @apply max-w-md mt-10 ml-6 p-6 bg-white/50 backdrop-blur-md rounded-2xl 
             border border-white/20 shadow-lg;
     }
 

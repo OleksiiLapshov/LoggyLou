@@ -62,8 +62,19 @@
       <% end %>
     </div>
 
-    <div>
+    <div class="pb-4">
       <%= form.submit "Post Worklog", class: "button-success" %>
     </div>
+
+    <% if worklog.new_record? %>
+      <div>
+        <%= link_to "Cancel", worklogs_path, class: "button-secondary" %>
+      </div>
+    <% else %>
+      <div>
+        <%= link_to "Cancel", @worklog, class: "button-secondary" %> |
+        <%= link_to "Back to worklogs", worklogs_path, class: "button-secondary" %>
+      </div>
+    <% end %>
   </div>
 <% end %>
