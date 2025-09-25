@@ -50,7 +50,7 @@
     }
 
     .form-card {
-        @apply max-w-md mt-10 ml-6 p-6 bg-white/50 backdrop-blur-md rounded-2xl 
+        @apply max-w-4xl mt-10 ml-6 p-6 bg-white/50 backdrop-blur-md rounded-2xl 
             border border-white/20 shadow-lg;
     }
 

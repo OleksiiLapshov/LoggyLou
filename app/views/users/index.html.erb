@@ -1,17 +1,27 @@
 <h1 class="text-3xl font-bold text-zinc-700 my-6 ml-6">Employees</h1>
 
-<div>
-    <ul>
-        <% @users.each do |u| %>
-            <li  class="form-card">
-                <p>Name: <%= u.first_name %> <%= u.last_name %></p>
-                Email: <%= link_to u.email, u %> | 
-                <%= link_to "View employee", u, class: "button-secondary mt-2" %>
-            </li>
-        <% end %>
-    </ul>
+<div class="form-card">
+    <table class="table w-full border border-zinc-500 border-collapse">
+        <thead class="text-lf font-bold">
+            <td class="border border-zinc-500 py-2 px-3">Name</td>
+            <td class="border border-zinc-500 py-2 px-3">Email</td>
+            <td class="border border-zinc-500 py-2 px-3">DOB</td>
+            <td class="border border-zinc-500 py-2 px-3">Actions</td>
+        </thead>
+        <tbody>
+            <% @users.each do |u| %>
+                <tr>
+                    <td class="border border-zinc-500 py-2 px-3"><%= u.first_name %> <%= u.last_name %></td>
+                    <td class="border border-zinc-500 py-2 px-3"><%= u.email %></td>
+                    <td class="border border-zinc-500 py-2 px-3">N/A</td>
+                    <td class="border border-zinc-500 py-2 px-3"><%= link_to "View", u, class: "button-secondary" %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
 </div>
 
 <section class="my-6 ml-6">
     <%= link_to "Register New Employee", new_user_path, class: "button-success" %>
 </section>
+
