@@ -36,12 +36,12 @@
             <%= f.password_field :password_confirmation, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
         </div>
         
+        <%= link_to "Cancel", users_path, class: "button-secondary" %>
         <% if user.new_record? %>
             <%= f.submit "Create Employee", class: "button-success" %>
         <% else %>
             <%= f.submit "Update Employee", class: "button-success" %>
         <% end %>
-        <%= link_to "Cancel", users_path, class: "button-secondary" %>
     </div>
 
 <% end %>

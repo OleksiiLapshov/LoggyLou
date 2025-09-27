@@ -1,5 +1,7 @@
 <h1  class="text-3xl font-bold text-zinc-700 my-6 ml-6">Employee details</h1>
-<p style="color: green"><%= notice %></p>
+<% if notice.present? %>
+    <p class="form-card" style="color: green"><%= notice %></p>
+<% end %>
 
 <div class="form-card">
     <h3 class="font-bold text-md">Name: </h3>
