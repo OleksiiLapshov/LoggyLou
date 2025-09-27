@@ -1,12 +1,12 @@
 <% content_for :title, "New project" %>
 
 
-<h1>New project</h1>
+<h1  class="text-3xl font-bold text-zinc-700 my-6 ml-6">New project</h1>
 
-<%= render "form", project: @project %>
+<div class="form-card">
+  <%= render "form", project: @project %>
 
-<br>
-
-<div>
-  <%= link_to "Back to projects", projects_path %>
+  <div class="mt-4">
+    <%= link_to "Back to projects", projects_path, class: "button-secondary" %>
+  </div>
 </div>

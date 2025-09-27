@@ -11,17 +11,17 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  <div class="flex">
+    <%= form.label :name, style: "display: block", class: "font-bold min-w-[120px]"  %>
+    <%= form.text_field :name, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
   </div>
 
-  <div>
-    <%= form.label :company, style: "display: block" %>
-    <%= form.text_field :company %>
+  <div class="flex class my-2">
+    <%= form.label :company, style: "display: block", class: "font-bold min-w-[120px]"  %>
+    <%= form.text_field :company, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="mt-2">
+    <%= form.submit "Save", class: "button-success"  %>
   </div>
 <% end %>

@@ -10,25 +10,37 @@
         </ul>
         </div>
     <% end %>
+    <div>
+        <div class="flex gap-4 py-2 items-center">
+            <%= f.label :first_name, class: "font-bold min-w-[120px]" %>
+            <%= f.text_field :first_name, autofocus: true, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
+        </div>
 
-    <%= f.label :first_name %>
-    <%= f.text_field :first_name, autofocus: true %>
+        <div class="flex gap-4 py-2 items-center">
+            <%= f.label :last_name, class: "font-bold min-w-[120px]" %>
+            <%= f.text_field :last_name, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
+        </div>
+        
+        <div class="flex gap-4 py-2 items-center">
+            <%= f.label :email, class: "font-bold min-w-[120px]" %>
+            <%= f.email_field :email, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
+        </div>
+        
+        <div class="flex gap-4 py-2 items-center">
+            <%= f.label :password, class: "font-bold min-w-[120px]" %>
+            <%= f.password_field :password, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
+        </div>
+        
+        <div class="flex gap-4 py-2 items-center">
+            <%= f.label :password_confirmation, "Confirm password", class: "font-bold min-w-[120px]" %>
+            <%= f.password_field :password_confirmation, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
+        </div>
+        
+        <% if user.new_record? %>
+            <%= f.submit "Create Employee", class: "button-success" %>
+        <% else %>
+            <%= f.submit "Update Employee", class: "button-success" %>
+        <% end %>
+    </div>
 
-    <%= f.label :last_name %>
-    <%= f.text_field :last_name%>
-
-    <%= f.label :email %>
-    <%= f.email_field :email %>
-
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-
-    <%= f.label :password_confirmation, "Confirm password" %>
-    <%= f.password_field :password_confirmation %>
-
-    <% if user.new_record? %>
-        <%= f.submit "Create Employee" %>
-    <% else %>
-        <%= f.submit "Update Employee" %>
-    <% end %>
 <% end %>
