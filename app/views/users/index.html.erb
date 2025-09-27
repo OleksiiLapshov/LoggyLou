@@ -14,7 +14,7 @@
                     <td class="border border-zinc-500 py-2 px-3"><%= u.first_name %> <%= u.last_name %></td>
                     <td class="border border-zinc-500 py-2 px-3"><%= u.email %></td>
                     <td class="border border-zinc-500 py-2 px-3">N/A</td>
-                    <td class="border border-zinc-500 py-2 px-3"><%= link_to "View", u, class: "button-secondary" %></td>
+                    <td class="border border-zinc-500 py-2 px-3"><%= link_to "View", u, class: "button-secondary" %> <%= link_to "Edit", edit_user_path(u), class: "button" %></td>
                 </tr>
             <% end %>
         </tbody>
