@@ -1,10 +1,7 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Worklogs" %>
 
-<h1 class="text-3xl font-bold text-zinc-700 my-6 ml-6">Worklogs</h1>
-
 <div id="worklogs" class="form-card space-y-6">
+  <h1 class="h1-style">Worklogs</h1>
   <% @worklogs.each do |worklog| %>
     <%= render worklog %>
     <p class="mt-4">

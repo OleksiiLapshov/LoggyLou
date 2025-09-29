@@ -1,0 +1,11 @@
+<% if notice.present? %>
+  <div class="form-card bg-green-50 border-green-500 text-green-700">
+    <%= notice %>
+  </div>
+<% end %>
+
+<% if alert.present? %>
+  <div class="form-card bg-red-50 border-red-500 text-red-700">
+    <%= alert %>
+  </div>
+<% end %>
