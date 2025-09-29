@@ -1,4 +1,6 @@
 class WorklogsController < ApplicationController
+
+  before_action :require_signin
   before_action :set_worklog, only: %i[ show edit update destroy ]
   before_action :set_projects, only: %i[ new create edit update ]
 
@@ -23,6 +25,7 @@ class WorklogsController < ApplicationController
   # POST /worklogs or /worklogs.json
   def create
     @worklog = Worklog.new(worklog_params)
+    @worklog.user = current_user
 
     respond_to do |format|
       if @worklog.save
@@ -70,6 +73,6 @@ class WorklogsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def worklog_params
-      params.expect(worklog: [ :employee, :hours, :note, :log_date, :project_id ])
+      params.expect(worklog: [ :hours, :note, :log_date, :project_id ])
     end
 end
