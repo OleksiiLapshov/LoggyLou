@@ -1,18 +1,5 @@
-<h1 class="text-3xl font-bold text-zinc-700 my-6 ml-6">Sign In</h1>
-
-<% if notice.present? %>
-  <div class="form-card bg-green-50 border-green-500 text-green-700">
-    <%= notice %>
-  </div>
-<% end %>
-
-<% if alert.present? %>
-  <div class="form-card bg-red-50 border-red-500 text-red-700">
-    <%= alert %>
-  </div>
-<% end %>
-
 <div class="form-card">
+  <h1 class="h1-style">Sign In</h1>
     <%= form_with(url: session_path) do |f| %>
         <div class="flex gap-4 py-2 items-center">
             <%= f.label :email, class: "font-bold min-w-[120px]"  %>
