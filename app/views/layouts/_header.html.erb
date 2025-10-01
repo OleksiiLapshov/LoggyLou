@@ -8,18 +8,22 @@
             <li>
                 <%= link_to "Worklogs", worklogs_path, class: "menu-item" %>
             </li>
-            <div class="h-8 w-px bg-gray-300"></div>
-            <li>
-                <%= link_to "Projects", projects_path, class: "menu-item" %>
-            </li>
-            <div class="h-8 w-px bg-gray-300"></div>
-            <li>
-                <%= link_to "Users", users_path, class: "menu-item" %>
-            </li>
+            <% if current_user_admin? %>
+                <div class="h-8 w-px bg-gray-300"></div>
+                <li>
+                    <%= link_to "Projects", projects_path, class: "menu-item" %>
+                </li>
+            <% end %>
+            <% if current_user_admin? %>
+                <div class="h-8 w-px bg-gray-300"></div>
+                <li>
+                    <%= link_to "Users", users_path, class: "menu-item" %>
+                </li>
+            <% end %>
             <div class="h-8 w-px bg-gray-300"></div>
             <% if current_user %>
                 <li class="ml-10">
-                    <%= link_to current_user.first_name, edit_user_path(current_user), class: "underline" %>
+                    <%= link_to current_user.first_name, user_path(current_user), class: "underline" %>
                 </li>
                 <li class="ml-6">
                     <%= link_to "Sign Out", session_path,
