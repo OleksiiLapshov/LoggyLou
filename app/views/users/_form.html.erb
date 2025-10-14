@@ -35,6 +35,23 @@
             <%= f.label :password_confirmation, "Confirm password", class: "font-bold min-w-[120px]" %>
             <%= f.password_field :password_confirmation, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
         </div>
+        <% if current_user_admin? %>
+            <div>
+                <%= form_with(model: user, local: true) do |form| %>
+                    <div>
+                        <%= form.label :projects, "Assign Projects", class: "font-bold min-w-[120px]" %>
+                        <div>
+                            <%= form.collection_check_boxes :project_ids, Project.all, :id, :name do |b| %>
+                                <div>
+                                    <%= b.check_box %>
+                                    <%= b.label %>
+                                </div>
+                            <% end %>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        <% end %>
         
         <%= link_to "Cancel", root_url, class: "button-secondary" %>
         <% if user.new_record? %>
