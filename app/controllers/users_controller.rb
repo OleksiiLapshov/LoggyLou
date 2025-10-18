@@ -1,13 +1,16 @@
 class UsersController < ApplicationController
-
   before_action :require_signin
-  before_action :require_admin, only: [:index]
+  before_action :require_admin, only: [ :index ]
   def index
     @users = User.all
   end
 
   def show
-    @user = User.find(params[:id])
+    if current_user_admin?
+      @user = User.find(params[:id])
+    else
+      @user = current_user
+    end
   end
 
   def new
@@ -25,11 +28,19 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
+    if current_user_admin?
+      @user = User.find(params[:id])
+    else
+      @user = current_user
+    end
   end
 
   def update
-    @user = User.find(params[:id])
+    if current_user_admin?
+      @user = User.find(params[:id])
+    else
+      @user = current_user
+    end
 
     if @user.update(user_params)
       redirect_to @user, notice: "Changes are saved!"
@@ -40,7 +51,7 @@ class UsersController < ApplicationController
 
 private
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, 
+    params.require(:user).permit(:first_name, :last_name, :email,
                                 :password, :password_confirmation,
                                 project_ids: [])
   end
