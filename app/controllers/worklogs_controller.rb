@@ -6,7 +6,11 @@ class WorklogsController < ApplicationController
 
   # GET /worklogs or /worklogs.json
   def index
-    @worklogs = Worklog.all
+    if current_user_admin?
+      @worklogs = Worklog.all
+    else
+      @worklogs = current_user.worklogs
+    end
   end
 
   # GET /worklogs/1 or /worklogs/1.json
@@ -68,7 +72,7 @@ class WorklogsController < ApplicationController
     end
 
     def set_projects
-      @projects = Project.all
+      @projects = current_user.projects
     end
 
     # Only allow a list of trusted parameters through.
