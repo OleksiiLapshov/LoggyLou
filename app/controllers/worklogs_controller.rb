@@ -6,10 +6,14 @@ class WorklogsController < ApplicationController
 
   # GET /worklogs or /worklogs.json
   def index
+    @selected_month = params[:month]&.to_i || Date.today.month
+    @selected_year = params[:year]&.to_i || Date.today.year
+
+    selected_date = Date.new(@selected_year, @selected_month, 1)
     if current_user_admin?
-      @worklogs = Worklog.all
+      @worklogs = Worklog.where(log_date: selected_date.all_month).order(log_date: :asc)
     else
-      @worklogs = current_user.worklogs.where(log_date: Date.today.all_month)
+      @worklogs = current_user.worklogs.where(log_date: selected_date.all_month).order(log_date: :asc)
     end
   end
 
