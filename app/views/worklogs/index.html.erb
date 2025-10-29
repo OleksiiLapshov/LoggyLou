@@ -1,20 +1,32 @@
 <% content_for :title, "Worklogs" %>
 
-<div id="worklogs" class="form-card space-y-6">
+<div class="form-card">
   <h1 class="h1-style">Worklogs</h1>
-  <% @worklogs.each do |worklog| %>
-    <%= render worklog %>
-    <p class="mt-4">
-      <%= link_to "View worklog", worklog, class: "button-secondary" %> | 
-      <%= link_to "Edit worklog", edit_worklog_path(worklog), class: "button" %>
-    </p>
-    <hr>
-  <% end %>
-
-  <div class="mt-6">
+  <table class="table w-full border border-zinc-500 border-collapse">
+    <thead class="text-lf font-bold">
+      <td class="border border-zinc-500 py-2 px-3">Date</td>
+      <td class="border border-zinc-500 py-2 px-3">Hours</td>
+      <td class="border border-zinc-500 py-2 px-3">Project</td>
+      <td class="border border-zinc-500 py-2 px-3">Notes</td>
+      <td class="border border-zinc-500 py-2 px-3">Actions</td>
+    </thead>
+    <tbody>
+      <% @worklogs.each do |worklog| %>
+        <tr>
+          <td class="border border-zinc-500 py-2 px-3"><%= worklog.log_date%></td>
+          <td class="border border-zinc-500 py-2 px-3"><%= worklog.hours %></td>
+          <td class="border border-zinc-500 py-2 px-3"><%= worklog.project.name %></td>
+          <td class="border border-zinc-500 py-2 px-3"><%= worklog.note %></td>
+          <td class="border border-zinc-500 py-2 px-3">
+            <%= link_to "View", worklog, class: "button-secondary" %>
+            <%= link_to "Edit", edit_worklog_path(worklog), class: "button" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <section class="mt-6">
     <%= link_to "New worklog", new_worklog_path, class: "button-success" %>
-  </div>
+  </section>
 </div>
-
-
 
