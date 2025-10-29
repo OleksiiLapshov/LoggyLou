@@ -9,12 +9,12 @@ class WorklogsController < ApplicationController
     if current_user_admin?
       @worklogs = Worklog.all
     else
-      @worklogs = current_user.worklogs
+      @worklogs = current_user.worklogs.where(log_date: Date.today.all_month)
     end
   end
 
   # GET /worklogs/1 or /worklogs/1.json
-  def show
+  def showv
   end
 
   # GET /worklogs/new
