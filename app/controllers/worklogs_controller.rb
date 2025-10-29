@@ -18,7 +18,7 @@ class WorklogsController < ApplicationController
   end
 
   # GET /worklogs/1 or /worklogs/1.json
-  def showv
+  def show
   end
 
   # GET /worklogs/new
