@@ -69,6 +69,28 @@ class WorklogsController < ApplicationController
     end
   end
 
+  def export
+    @selected_month = params[:month]&.to_i || Date.today.month
+    @selected_year = params[:year]&.to_i || Date.today.year
+
+    selected_date = Date.new(@selected_year, @selected_month, 1)
+
+    if current_user_admin?
+      @worklogs = Worklog.where(log_date: selected_date.all_month).order(log_date: :asc)
+    else
+      @worklogs = current_user.worklogs.where(log_date: selected_date.all_month).order(log_date: :asc)
+    end
+
+    respond_to do |format|
+      format.csv do
+        send_data generate_csv(@worklogs), 
+                  filename: "worklogs_#{@selected_year}_#{@selected_month.to_s.rjust(2, '0')}.csv",
+                  type: "text/csv",
+                  disposition: "attachment"
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_worklog
@@ -82,5 +104,27 @@ class WorklogsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def worklog_params
       params.expect(worklog: [ :hours, :note, :log_date, :project_id ])
+    end
+
+    def generate_csv(worklogs)
+      require 'csv'
+
+      CSV.generate(headers: true) do |csv|
+        csv << [ "Date", "Employee", "Hours", "Notes", "Project", "Company" ]
+
+        worklogs.each do |worklog|
+          csv << [
+            worklog.log_date.strftime("%Y-%m-%d"),
+            worklog.user.full_name,
+            worklog.hours.to_s,
+            worklog.note,
+            worklog.project.name,
+            worklog.project.company
+          ]
+        end
+
+        csv << []
+        csv << [ "TOTAL", "", worklogs.sum(:hours).to_s, "", "", "" ]
+      end
     end
 end

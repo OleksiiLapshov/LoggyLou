@@ -19,6 +19,10 @@
 
     <%= form.submit "Filter", class: "button" %>
     <%= link_to "Reset", worklogs_path, class: "button-secondary" %>
+
+    <%= link_to "Export CSV", 
+          export_worklogs_path(month: @selected_month, year: @selected_year, format: :csv),
+          class: "button-success" %>
   <% end %>
 </div>
 

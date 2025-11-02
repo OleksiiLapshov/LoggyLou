@@ -14,6 +14,7 @@
     <div class="flex gap-4 py-2 items-center">
       <%= form.label :hours, style: "display: block", class: "font-bold min-w-[120px]" %>
       <%= form.text_field :hours, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
+      <div class="text-xs">*note: 15min = 0.25</div>
       <% if worklog.errors[:hours].any? %>
         <div class="text-red-600">
           <%= worklog.errors[:hours].first %>

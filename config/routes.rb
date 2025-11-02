@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   root "worklogs#index"
 
   resources :projects
-  resources :worklogs
+  resources :worklogs do
+    collection do
+      get :export
+    end
+  end
   resource :session, only: [ :new, :create, :destroy ]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
