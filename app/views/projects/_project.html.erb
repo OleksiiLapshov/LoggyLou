@@ -8,5 +8,11 @@
     <strong>Company:</strong>
     <%= project.company %>
   </p>
+  <p>
+    <strong>Assigned to:</strong>
+    <% project.users.each do |user| %>
+      <p class="underline"><%= link_to "#{user.first_name} #{user.last_name}", user %></p>
+    <% end %>
+  </p>
 
 </div>

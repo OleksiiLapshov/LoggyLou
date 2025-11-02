@@ -1,16 +1,17 @@
 <% content_for :title, "Projects" %>
 
-<div id="projects"  class="form-card space-y-6">
-  <h1 class="h1-style">Projects</h1>
+<div id="projects">
+  <h1 class="h1-style form-card">Projects</h1>
 
   <% @projects.each do |project| %>
-    <%= render project %>
-    <p>
-      <%= link_to "View project", project, class: "button-secondary" %>
-    </p>
-    <hr>
+    <div class = "form-card">
+      <%= render project %>
+      <p class="mt-3">
+        <%= link_to "View project", project, class: "button-secondary" %>
+      </p>
+    </div>
   <% end %>
-  <div class="mt-6">
+  <div class="mt-6 form-card">
     <%= link_to "New project", new_project_path, class: "button-success" %>
   </div>
 </div>
