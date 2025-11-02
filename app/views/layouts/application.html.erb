@@ -22,13 +22,12 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="h-screen w-full bg-gradient-to-b from-[#f8e9ca] to-[#d9a673] bg-fixed">
+  <body class="flex flex-col min-h-screen bg-gradient-to-b from-[#f8e9ca] to-[#d9a673] bg-fixed">
     <%= render "layouts/header" %>
 
     <%= render "layouts/alert" %>
     <%= yield %>
     <br>
-    <hr>
     <%= render "layouts/footer" %>
   </body>
 </html>
