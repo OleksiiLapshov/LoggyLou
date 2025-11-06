@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  status: 1
+  submitted_at: 2025-11-06 19:00:38
+  reviewed_at: 2025-11-06 19:00:38
+  reviewed_by_id: 1
+  rejection_reason: MyText
+  period_start: 2025-11-06
+  period_end: 2025-11-06
+
+two:
+  user: two
+  status: 1
+  submitted_at: 2025-11-06 19:00:38
+  reviewed_at: 2025-11-06 19:00:38
+  reviewed_by_id: 1
+  rejection_reason: MyText
+  period_start: 2025-11-06
+  period_end: 2025-11-06
