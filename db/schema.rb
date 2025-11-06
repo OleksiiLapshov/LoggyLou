@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_06_170555) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_13_160924) do
   create_table "assignments", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "project_id", null: false
@@ -25,22 +25,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_06_170555) do
     t.string "company"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "submissions", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "status", default: 0, null: false
-    t.datetime "submitted_at"
-    t.datetime "reviewed_at"
-    t.integer "reviewed_by_id"
-    t.text "rejection_reason"
-    t.date "period_start"
-    t.date "period_end"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["reviewed_by_id"], name: "index_submissions_on_reviewed_by_id"
-    t.index ["status"], name: "index_submissions_on_status"
-    t.index ["user_id"], name: "index_submissions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -61,17 +45,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_06_170555) do
     t.datetime "updated_at", null: false
     t.integer "project_id", null: false
     t.integer "user_id", default: 1, null: false
-    t.integer "submission_id"
     t.index ["project_id"], name: "index_worklogs_on_project_id"
-    t.index ["submission_id"], name: "index_worklogs_on_submission_id"
     t.index ["user_id"], name: "index_worklogs_on_user_id"
   end
 
   add_foreign_key "assignments", "projects"
   add_foreign_key "assignments", "users"
-  add_foreign_key "submissions", "users"
-  add_foreign_key "submissions", "users", column: "reviewed_by_id"
   add_foreign_key "worklogs", "projects"
-  add_foreign_key "worklogs", "submissions"
   add_foreign_key "worklogs", "users"
 end
