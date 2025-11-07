@@ -25,26 +25,26 @@ User.create!([
     first_name: "Lou",
     last_name: "Cat",
     email: "cat@loggylou.com",
-    password: "qwerty",
-    password_confirmation: "qwerty"
+    password: "test",
+    password_confirmation: "test"
   },
   {
     first_name: "Test",
     last_name: "Tester",
     email: "test@loggylou.com",
-    password: "qwerty",
-    password_confirmation: "qwerty"
+    password: "test",
+    password_confirmation: "test"
   }
 ])
 
 Project.create!([
   {
-    name: "Default",
+    name: "General",
     company: "OkayQuai"
   },
   {
-    name: "Test",
-    company: "Test"
+    name: "Day-off/vacation/sick-day",
+    company: "OkayQuai"
   },
   {
     name: "Work",
