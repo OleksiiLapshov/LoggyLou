@@ -13,6 +13,6 @@ class Worklog < ApplicationRecord
   }
 
   def editable?
-    submission_id.nil? || submission&.draft?
+    submission_id.nil?
   end
 end

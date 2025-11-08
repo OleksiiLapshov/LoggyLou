@@ -30,6 +30,9 @@
       <% period_start = Date.new(@selected_year, @selected_month, 1) %>
       <% period_end   = period_start.end_of_month %>
       <% unsubmitted = current_user.worklogs.for_period(period_start, period_end).not_submitted %>
+      <% if current_user.submissions.exists?(period_start: period_start, period_end: period_end) %>
+        <%= "Timesheet for #{period_start.strftime('%B %Y')} submitted." %>
+      <% end %>
       <% if unsubmitted.sum(:hours) > 0 %>
         <%= link_to "Submit Timesheet (#{unsubmitted.sum(:hours)} h)",
               submit_timesheet_worklogs_path(month: @selected_month, year: @selected_year),
@@ -64,12 +67,14 @@
             <td class="border border-zinc-500 py-2 px-3" title="<%= worklog.note %>"><%= truncate(worklog.note, length: 100) %></td>
             <td class="border border-zinc-500 py-2 px-3">
               <div class="flex gap-1 justify-center">
-                <%= button_to "View", worklog, 
-                              class: !worklog.editable? ? "button-secondary" : "button-disabled", 
-                              disabled: worklog.editable? %>
-                <%= button_to "Edit", edit_worklog_path(worklog), 
-                              class: !worklog.editable? ? "button" : "button-disabled", 
-                              disabled: worklog.editable? %>
+                <%= button_to "View", worklog,
+                              method: :get,
+                              class: worklog.editable? ? "button-secondary" : "button-disabled", 
+                              disabled: !worklog.editable? %>
+                <%= button_to "Edit", edit_worklog_path(worklog),
+                              method: :get,
+                              class: worklog.editable? ? "button" : "button-disabled", 
+                              disabled: !worklog.editable? %>
               </div>
             </td>
           </tr>
