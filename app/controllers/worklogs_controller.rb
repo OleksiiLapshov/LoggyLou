@@ -102,7 +102,7 @@ class WorklogsController < ApplicationController
       # get worklogs for filtered period, and not submitted
       worklogs = current_user.worklogs
                         .for_period(period_start, period_end)
-                        .unsubmitted
+                        .not_submitted
 
       # Check if no worklogs to submit
       if worklogs.empty?
