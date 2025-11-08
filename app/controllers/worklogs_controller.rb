@@ -107,7 +107,7 @@ class WorklogsController < ApplicationController
       # Check if no worklogs to submit
       if worklogs.empty?
         redirect_to worklogs_path(month: month, year: year),
-          alert: "No worklogs that aren't sent for #{period.strftime('%B %Y')}."
+          alert: "No unsubmitted worklogs for #{period_start.strftime('%B %Y')}."
         return
       end
 
