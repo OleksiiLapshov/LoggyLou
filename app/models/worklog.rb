@@ -8,10 +8,8 @@ class Worklog < ApplicationRecord
 
   scope :not_submitted, -> { where(submission_id: nil) }
 
-  scope :for_period, ->(month, year) {
-    return none unless mpnth && year
-    date = Date.new(year.to_i, month.to_1, 1)
-    where(log_date: date.beginning_of_month..date.end_of_month)
+  scope :for_period, ->(start_date, end_date) {
+    where(log_date: start_date..end_date)
   }
 
   def editable?

@@ -23,6 +23,19 @@
     <%= link_to "Export CSV", 
           export_worklogs_path(month: @selected_month, year: @selected_year, format: :csv),
           class: "button-success" %>
+
+    <% period_start = Date.new(@selected_year, @selected_month, 1) %>
+    <% period_end   = period_start.end_of_month %>
+    <% unsubmitted = current_user.worklogs.for_period(period_start, period_end).not_submitted %>
+    <form action="<%= submit_timesheet_worklogs_path(month: @selected_month, year: @selected_year) %>"
+          method="post"
+          data-turbo="false">
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      <input type="submit"
+             value="Submit Timesheet (<%= unsubmitted.sum(:hours) %> h)"
+             data-confirm="Submit <%= unsubmitted.sum(:hours) %> hours for <%= period_start.strftime('%B %Y') %>?"
+             class="button-success" />
+    </form>
   <% end %>
 </div>
 

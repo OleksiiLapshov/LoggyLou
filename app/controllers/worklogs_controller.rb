@@ -2,6 +2,7 @@ class WorklogsController < ApplicationController
 
   before_action :require_signin
   before_action :set_worklog, only: %i[ show edit update destroy ]
+  skip_before_action :set_worklog, only: :submit_timesheet
   before_action :set_projects, only: %i[ new create edit update ]
 
   # GET /worklogs or /worklogs.json
@@ -88,6 +89,44 @@ class WorklogsController < ApplicationController
                   type: "text/csv",
                   disposition: "attachment"
       end
+    end
+
+    def submit_timesheet
+      month = params[:month]&.to_i || Date.today.month
+      year = params[:year]&.to_i || Date.today.year
+
+      period_start = Date.new(year, month, 1)
+      period_end   = period_start.end_of_month
+
+      # get worklogs for filtered period, and not submitted
+      worklogs = current_user.worklogs
+                        .for_period(period_start, period_end)
+                        .unsubmitted
+
+      # Check if no worklogs to submit
+      if worklogs.empty?
+        redirect_to worklogs_path(month: month, year: year),
+          alert: "No worklogs that aren't sent for #{period.strftime('%B %Y')}."
+        return
+      end
+
+      # Check if there is a submission for this period
+      if current_user.submissions.exists?(period_start: period_start, period_end: period_end)
+        redirect_to worklogs_path(month: month, year: year),
+                alert: "Already submitted for #{period_start.strftime('%B %Y')}."
+        return
+      end
+
+      submission = current_user.submissions.create!(
+        period_start: period_start,
+        period_end:   period_end,
+        status:       :draft,
+        note:         "Submitted #{worklogs.sum(:hours)} hours for #{period_start.strftime('%B %Y')}"
+      )
+      worklogs.update_all(submission_id: submission.id)
+
+      redirect_to submissions_path,
+              notice: "Timesheet submitted for #{period_start.strftime('%B %Y')}!"
     end
   end
 
