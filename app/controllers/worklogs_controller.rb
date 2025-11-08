@@ -90,8 +90,9 @@ class WorklogsController < ApplicationController
                   disposition: "attachment"
       end
     end
+  end
 
-    def submit_timesheet
+  def submit_timesheet
       month = params[:month]&.to_i || Date.today.month
       year = params[:year]&.to_i || Date.today.year
 
@@ -127,7 +128,6 @@ class WorklogsController < ApplicationController
 
       redirect_to submissions_path,
               notice: "Timesheet submitted for #{period_start.strftime('%B %Y')}!"
-    end
   end
 
   private
