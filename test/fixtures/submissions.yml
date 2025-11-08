@@ -2,20 +2,14 @@
 
 one:
   user: one
+  period_start: 2025-11-08
+  period_end: 2025-11-08
   status: 1
-  submitted_at: 2025-11-06 19:00:38
-  reviewed_at: 2025-11-06 19:00:38
-  reviewed_by_id: 1
-  rejection_reason: MyText
-  period_start: 2025-11-06
-  period_end: 2025-11-06
+  note: MyText
 
 two:
   user: two
+  period_start: 2025-11-08
+  period_end: 2025-11-08
   status: 1
-  submitted_at: 2025-11-06 19:00:38
-  reviewed_at: 2025-11-06 19:00:38
-  reviewed_by_id: 1
-  rejection_reason: MyText
-  period_start: 2025-11-06
-  period_end: 2025-11-06
+  note: MyText

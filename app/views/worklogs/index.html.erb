@@ -29,14 +29,16 @@
 <div class="form-card">
   <h1 class="h1-style">Worklogs</h1>
 
-  <table class="table w-full border border-zinc-500 border-collapse">
-    <thead class="text-lf font-bold">
-      <td class="border border-zinc-500 py-2 px-3">Date</td>
-      <td class="border border-zinc-500 py-2 px-3">Hours</td>
-      <td class="border border-zinc-500 py-2 px-3">Project</td>
+  <table class="table-fixed w-full border border-zinc-500 border-collapse">
+  <thead class="text-lf font-bold">
+    <tr>
+      <td class="border border-zinc-500 py-2 px-3 w-32">Date</td>
+      <td class="border border-zinc-500 py-2 px-3 w-18">Hours</td>
+      <td class="border border-zinc-500 py-2 px-3 w-48">Project</td>
       <td class="border border-zinc-500 py-2 px-3">Notes</td>
-      <td class="border border-zinc-500 py-2 px-3">Actions</td>
-    </thead>
+      <td class="border border-zinc-500 py-2 px-3 w-48">Actions</td>
+    </tr>
+  </thead>
     <tbody>
       <% @worklogs.each do |worklog| %>
         <tr>

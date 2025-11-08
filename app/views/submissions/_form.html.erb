@@ -1,0 +1,42 @@
+<%= form_with(model: submission, class: "contents") do |form| %>
+  <% if submission.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
+      <h2><%= pluralize(submission.errors.count, "error") %> prohibited this submission from being saved:</h2>
+
+      <ul class="list-disc ml-6">
+        <% submission.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="my-5">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": submission.errors[:user_id].none?, "border-red-400 focus:outline-red-600": submission.errors[:user_id].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :period_start %>
+    <%= form.date_field :period_start, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": submission.errors[:period_start].none?, "border-red-400 focus:outline-red-600": submission.errors[:period_start].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :period_end %>
+    <%= form.date_field :period_end, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": submission.errors[:period_end].none?, "border-red-400 focus:outline-red-600": submission.errors[:period_end].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :status %>
+    <%= form.number_field :status, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": submission.errors[:status].none?, "border-red-400 focus:outline-red-600": submission.errors[:status].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :note %>
+    <%= form.textarea :note, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": submission.errors[:note].none?, "border-red-400 focus:outline-red-600": submission.errors[:note].any?}] %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>
