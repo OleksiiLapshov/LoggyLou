@@ -12,9 +12,9 @@ class WorklogsController < ApplicationController
 
     selected_date = Date.new(@selected_year, @selected_month, 1)
     if current_user_admin?
-      @worklogs = Worklog.where(log_date: selected_date.all_month).order(log_date: :asc)
+      @worklogs = Worklog.where(log_date: selected_date.all_month).order(log_date: :desc)
     else
-      @worklogs = current_user.worklogs.where(log_date: selected_date.all_month).order(log_date: :asc)
+      @worklogs = current_user.worklogs.where(log_date: selected_date.all_month).order(log_date: :desc)
     end
   end
 
@@ -24,7 +24,7 @@ class WorklogsController < ApplicationController
 
   # GET /worklogs/new
   def new
-    @worklog = Worklog.new
+    @worklog = Worklog.new(log_date: Time.zone.today)
   end
 
   # GET /worklogs/1/edit
@@ -38,7 +38,7 @@ class WorklogsController < ApplicationController
 
     respond_to do |format|
       if @worklog.save
-        format.html { redirect_to @worklog, notice: "Worklog was successfully created." }
+        format.html { redirect_to worklogs_url, notice: "Worklog was successfully created." }
         format.json { render :show, status: :created, location: @worklog }
       else
         format.html { render :new, status: :unprocessable_entity }

@@ -6,6 +6,10 @@
             </li>
             <div class="h-8 w-px bg-gray-300"></div>
             <li>
+                <%= link_to "Timesheets", submissions_path, class: "menu-item" %>
+            </li>
+            <div class="h-8 w-px bg-gray-300"></div>
+            <li>
                 <%= link_to "Worklogs", worklogs_path, class: "menu-item" %>
             </li>
             <% if current_user_admin? %>

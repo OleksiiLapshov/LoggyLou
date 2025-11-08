@@ -20,51 +20,94 @@
     <%= form.submit "Filter", class: "button" %>
     <%= link_to "Reset", worklogs_path, class: "button-secondary" %>
 
-    <%= link_to "Export CSV", 
-          export_worklogs_path(month: @selected_month, year: @selected_year, format: :csv),
-          class: "button-success" %>
+    <% if !current_user_admin? %>
+      <% if @worklogs.count > 0 %>
+        <%= link_to "Export CSV", 
+              export_worklogs_path(month: @selected_month, year: @selected_year, format: :csv),
+              class: "button-success" %>
+      <% end %>
 
-    <% period_start = Date.new(@selected_year, @selected_month, 1) %>
-    <% period_end   = period_start.end_of_month %>
-    <% unsubmitted = current_user.worklogs.for_period(period_start, period_end).not_submitted %>
-    <%= link_to "Submit Timesheet (#{unsubmitted.sum(:hours)} h)",
-          submit_timesheet_worklogs_path(month: @selected_month, year: @selected_year),
-          data: { turbo_method: :post,
-            turbo_confirm: "Submit #{unsubmitted.sum(:hours)} hours for #{period_start.strftime('%B %Y')}?" },
-          class: "button-success" %>
+      <% period_start = Date.new(@selected_year, @selected_month, 1) %>
+      <% period_end   = period_start.end_of_month %>
+      <% unsubmitted = current_user.worklogs.for_period(period_start, period_end).not_submitted %>
+      <% if unsubmitted.sum(:hours) > 0 %>
+        <%= link_to "Submit Timesheet (#{unsubmitted.sum(:hours)} h)",
+              submit_timesheet_worklogs_path(month: @selected_month, year: @selected_year),
+              data: { turbo_method: :post,
+                turbo_confirm: "Submit #{unsubmitted.sum(:hours)} hours for #{period_start.strftime('%B %Y')}?" },
+              class: "button-success" %>
+      <% end %>
+    <% end %>
   <% end %>
 </div>
 
-<div class="form-card">
-  <h1 class="h1-style">Worklogs</h1>
+<% if !current_user_admin? %>
+  <div class="form-card">
+    <h1 class="h1-style">My Worklogs</h1>
 
-  <table class="table-fixed w-full border border-zinc-500 border-collapse">
-  <thead class="text-lf font-bold">
-    <tr>
-      <td class="border border-zinc-500 py-2 px-3 w-32">Date</td>
-      <td class="border border-zinc-500 py-2 px-3 w-18">Hours</td>
-      <td class="border border-zinc-500 py-2 px-3 w-48">Project</td>
-      <td class="border border-zinc-500 py-2 px-3">Notes</td>
-      <td class="border border-zinc-500 py-2 px-3 w-48">Actions</td>
-    </tr>
-  </thead>
-    <tbody>
-      <% @worklogs.each do |worklog| %>
-        <tr>
-          <td class="border border-zinc-500 py-2 px-3"><%= worklog.log_date%></td>
-          <td class="border border-zinc-500 py-2 px-3"><%= worklog.hours %></td>
-          <td class="border border-zinc-500 py-2 px-3"><%= worklog.project.name %></td>
-          <td class="border border-zinc-500 py-2 px-3" title="<%= worklog.note %>"><%= truncate(worklog.note, length: 100) %></td>
-          <td class="border border-zinc-500 py-2 px-3">
-            <%= link_to "View", worklog, class: "button-secondary" %>
-            <%= link_to "Edit", edit_worklog_path(worklog), class: "button" %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <section class="mt-6">
-    <%= link_to "New worklog", new_worklog_path, class: "button-success" %>
-  </section>
-</div>
+    <table class="table-fixed w-full border border-zinc-500 border-collapse">
+    <thead class="text-lf font-bold">
+      <tr>
+        <td class="border border-zinc-500 py-2 px-3 w-32">Date</td>
+        <td class="border border-zinc-500 py-2 px-3 w-18">Hours</td>
+        <td class="border border-zinc-500 py-2 px-3 w-48">Project</td>
+        <td class="border border-zinc-500 py-2 px-3">Notes</td>
+        <td class="border border-zinc-500 py-2 px-3 w-48">Actions</td>
+      </tr>
+    </thead>
+      <tbody>
+        <% @worklogs.each do |worklog| %>
+          <tr>
+            <td class="border border-zinc-500 py-2 px-3"><%= worklog.log_date%></td>
+            <td class="border border-zinc-500 py-2 px-3"><%= worklog.hours %></td>
+            <td class="border border-zinc-500 py-2 px-3"><%= worklog.project.name %></td>
+            <td class="border border-zinc-500 py-2 px-3" title="<%= worklog.note %>"><%= truncate(worklog.note, length: 100) %></td>
+            <td class="border border-zinc-500 py-2 px-3">
+              <div class="flex gap-1 justify-center">
+                <%= button_to "View", worklog, 
+                              class: !worklog.editable? ? "button-secondary" : "button-disabled", 
+                              disabled: worklog.editable? %>
+                <%= button_to "Edit", edit_worklog_path(worklog), 
+                              class: !worklog.editable? ? "button" : "button-disabled", 
+                              disabled: worklog.editable? %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <section class="mt-6">
+      <%= link_to "New worklog", new_worklog_path, class: "button-success" %>
+    </section>
+  </div>
+<% end %>
+
+<% if current_user_admin? %>
+  <div class="form-card">
+    <h1 class="h1-style">Employee's Worklogs</h1>
+
+    <table class="table-fixed w-full border border-zinc-500 border-collapse">
+    <thead class="text-lf font-bold">
+      <tr>
+        <td class="border border-zinc-500 py-2 px-3 w-32">Date</td>
+        <td class="border border-zinc-500 py-2 px-3 w-32">Employee</td>
+        <td class="border border-zinc-500 py-2 px-3 w-18">Hours</td>
+        <td class="border border-zinc-500 py-2 px-3 w-48">Project</td>
+        <td class="border border-zinc-500 py-2 px-3">Notes</td>
+      </tr>
+    </thead>
+      <tbody>
+        <% @worklogs.each do |worklog| %>
+          <tr>
+            <td class="border border-zinc-500 py-2 px-3"><%= worklog.log_date %></td>
+            <td class="border border-zinc-500 py-2 px-3"><%= worklog.user.full_name %></td>
+            <td class="border border-zinc-500 py-2 px-3"><%= worklog.hours %></td>
+            <td class="border border-zinc-500 py-2 px-3"><%= worklog.project.name %></td>
+            <td class="border border-zinc-500 py-2 px-3" title="<%= worklog.note %>"><%= truncate(worklog.note, length: 100) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
 
