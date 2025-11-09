@@ -2,6 +2,7 @@ class WorklogsController < ApplicationController
 
   before_action :require_signin
   before_action :set_worklog, only: %i[ show edit update destroy ]
+  skip_before_action :set_worklog, only: :submit_timesheet
   before_action :set_projects, only: %i[ new create edit update ]
 
   # GET /worklogs or /worklogs.json
@@ -11,9 +12,9 @@ class WorklogsController < ApplicationController
 
     selected_date = Date.new(@selected_year, @selected_month, 1)
     if current_user_admin?
-      @worklogs = Worklog.where(log_date: selected_date.all_month).order(log_date: :asc)
+      @worklogs = Worklog.where(log_date: selected_date.all_month).order(log_date: :desc)
     else
-      @worklogs = current_user.worklogs.where(log_date: selected_date.all_month).order(log_date: :asc)
+      @worklogs = current_user.worklogs.where(log_date: selected_date.all_month).order(log_date: :desc)
     end
   end
 
@@ -23,7 +24,7 @@ class WorklogsController < ApplicationController
 
   # GET /worklogs/new
   def new
-    @worklog = Worklog.new
+    @worklog = Worklog.new(log_date: Time.zone.today)
   end
 
   # GET /worklogs/1/edit
@@ -37,7 +38,7 @@ class WorklogsController < ApplicationController
 
     respond_to do |format|
       if @worklog.save
-        format.html { redirect_to @worklog, notice: "Worklog was successfully created." }
+        format.html { redirect_to worklogs_url, notice: "Worklog was successfully created." }
         format.json { render :show, status: :created, location: @worklog }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -89,6 +90,44 @@ class WorklogsController < ApplicationController
                   disposition: "attachment"
       end
     end
+  end
+
+  def submit_timesheet
+      month = params[:month]&.to_i || Date.today.month
+      year = params[:year]&.to_i || Date.today.year
+
+      period_start = Date.new(year, month, 1)
+      period_end   = period_start.end_of_month
+
+      # get worklogs for filtered period, and not submitted
+      worklogs = current_user.worklogs
+                        .for_period(period_start, period_end)
+                        .not_submitted
+
+      # Check if no worklogs to submit
+      if worklogs.empty?
+        redirect_to worklogs_path(month: month, year: year),
+          alert: "No unsubmitted worklogs for #{period_start.strftime('%B %Y')}."
+        return
+      end
+
+      # Check if there is a submission for this period
+      if current_user.submissions.exists?(period_start: period_start, period_end: period_end)
+        redirect_to worklogs_path(month: month, year: year),
+                alert: "Already submitted for #{period_start.strftime('%B %Y')}."
+        return
+      end
+
+      submission = current_user.submissions.create!(
+        period_start: period_start,
+        period_end:   period_end,
+        status:       :draft,
+        note:         "Submitted #{worklogs.sum(:hours)} hours for #{period_start.strftime('%B %Y')}"
+      )
+      worklogs.update_all(submission_id: submission.id)
+
+      redirect_to submissions_path,
+              notice: "Timesheet submitted for #{period_start.strftime('%B %Y')}!"
   end
 
   private

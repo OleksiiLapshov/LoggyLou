@@ -49,6 +49,13 @@
            cursor-pointer no-underline;
     }
 
+    .button-disabled {
+        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-bold rounded-md
+           text-zinc-500 bg-zinc-200 hover:bg-zinc-100 focus:outline-none focus:ring-2 
+           focus:ring-zinc-200 focus:ring-offset-2 transition-colors duration-200 
+           cursor-pointer no-underline;
+    }
+
     .form-card {
         @apply container mx-auto mt-10 px-6 py-6 bg-white/50 backdrop-blur-md rounded-2xl 
         border border-white/20 shadow-lg;

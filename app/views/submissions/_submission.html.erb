@@ -1,0 +1,22 @@
+<div id="<%= dom_id submission %>" class="w-full sm:w-auto flex gap-x-4">
+  <div>
+    <strong class="block font-medium mb-1">Employee:</strong>
+    <%= "#{submission.user.first_name} #{submission.user.last_name}" %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Period start:</strong>
+    <%= submission.period_start %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Period end:</strong>
+    <%= submission.period_end %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Status:</strong>
+    <%= submission.status %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Note:</strong>
+    <%= submission.note %>
+  </div>
+</div>

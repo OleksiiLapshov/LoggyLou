@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :submissions
   resources :assignments
   resources :users
   root "worklogs#index"
@@ -7,6 +8,7 @@ Rails.application.routes.draw do
   resources :worklogs do
     collection do
       get :export
+      post :submit_timesheet
     end
   end
   resource :session, only: [ :new, :create, :destroy ]
