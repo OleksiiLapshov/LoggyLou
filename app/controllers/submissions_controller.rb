@@ -3,7 +3,11 @@ class SubmissionsController < ApplicationController
 
   # GET /submissions or /submissions.json
   def index
-    @submissions = Submission.all
+    if current_user_admin?
+      @submissions = Submission.all
+    else
+      @submissions = current_user.submissions
+    end
   end
 
   # GET /submissions/1 or /submissions/1.json

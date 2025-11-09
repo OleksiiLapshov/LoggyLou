@@ -4,5 +4,5 @@ class Submission < ApplicationRecord
 
   enum :status, { draft: 0, approved: 1, rejected: 2 }
 
-  validates :user_id, uniqueness: { scope: [ :period_start, :period_end ] }
+  validates :user_id, uniqueness: { scope: [ :period_start, :period_end, :id ] }
 end
