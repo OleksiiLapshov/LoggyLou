@@ -1,5 +1,6 @@
 class SubmissionsController < ApplicationController
-  before_action :set_submission, only: %i[ show edit update destroy ]
+  before_action :set_submission, only: %i[ show edit update destroy approve reject export ]
+  before_action :require_admin, only: %i[ edit update destroy approve reject ]
 
   # GET /submissions or /submissions.json
   def index
@@ -21,6 +22,7 @@ class SubmissionsController < ApplicationController
 
   # GET /submissions/1/edit
   def edit
+    @submission.note = nil
   end
 
   # POST /submissions or /submissions.json
@@ -42,6 +44,7 @@ class SubmissionsController < ApplicationController
   def update
     respond_to do |format|
       if @submission.update(submission_params)
+        @submission.status = :rejected
         format.html { redirect_to @submission, notice: "Submission was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @submission }
       else
@@ -61,6 +64,32 @@ class SubmissionsController < ApplicationController
     end
   end
 
+  def reject
+    if params[:note].present?
+      @submission.update(status: :rejected, note: params[:note])
+      @submission.worklogs.update(submission_id: nil)
+      redirect_to @submission, notice: "Submission rejected."
+    else
+      redirect_to @submission, alert: "Please provide a rejection note."
+    end
+  end
+
+  def approve
+    @submission.update(status: :approved)
+    redirect_to @submission, notice: "Submission approved."
+  end
+
+  def export
+    respond_to do |format|
+      format.csv do
+        send_data generate_csv(@submission.worklogs),
+                  filename: "worklogs_#{@submission.period_start}_#{@submission.period_end}.csv",
+                  type: "text/csv",
+                  disposition: "attachment"
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_submission
@@ -70,5 +99,27 @@ class SubmissionsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def submission_params
       params.expect(submission: [ :user_id, :period_start, :period_end, :status, :note ])
+    end
+
+    def generate_csv(worklogs)
+      require 'csv'
+
+      CSV.generate(headers: true) do |csv|
+        csv << [ "Date", "Employee", "Hours", "Notes", "Project", "Company" ]
+
+        worklogs.order(:log_date).each do |worklog|
+          csv << [
+            worklog.log_date.strftime("%Y-%m-%d"),
+            worklog.user.full_name,
+            worklog.hours.to_s,
+            worklog.note,
+            worklog.project.name,
+            worklog.project.company
+          ]
+        end
+
+        csv << []
+        csv << [ "TOTAL", "", worklogs.sum(:hours).to_s, "", "", "" ]
+      end
     end
 end

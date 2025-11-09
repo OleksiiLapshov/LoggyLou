@@ -112,7 +112,9 @@ class WorklogsController < ApplicationController
       end
 
       # Check if there is a submission for this period
-      if current_user.submissions.exists?(period_start: period_start, period_end: period_end)
+      if current_user.submissions.where(period_start: period_start, period_end: period_end)
+                                 .where.not(status: :rejected)
+                                 .exists?
         redirect_to worklogs_path(month: month, year: year),
                 alert: "Already submitted for #{period_start.strftime('%B %Y')}."
         return
