@@ -10,11 +10,13 @@ class WorklogsController < ApplicationController
     @selected_month = params[:month]&.to_i || Date.today.month
     @selected_year = params[:year]&.to_i || Date.today.year
 
-    selected_date = Date.new(@selected_year, @selected_month, 1)
+    @first_day = Date.new(@selected_year, @selected_month, 1)
+    last_day = @first_day.end_of_month
+    @unsubmitted = current_user.worklogs.for_period(@first_day, last_day).not_submitted
     if current_user_admin?
-      @worklogs = Worklog.where(log_date: selected_date.all_month).order(log_date: :desc)
+      @worklogs = Worklog.where(log_date: @first_day.all_month).order(log_date: :desc)
     else
-      @worklogs = current_user.worklogs.where(log_date: selected_date.all_month).order(log_date: :desc)
+      @worklogs = current_user.worklogs.where(log_date: @first_day.all_month).order(log_date: :desc)
     end
   end
 
