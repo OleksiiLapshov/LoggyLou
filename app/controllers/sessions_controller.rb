@@ -17,6 +17,6 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
-    redirect_to worklogs_url, status: :see_other, notice: "Signed out!"
+    redirect_to signin_path, status: :see_other, notice: "Signed out!"
   end
 end
