@@ -136,6 +136,9 @@ class WorklogsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_worklog
       @worklog = Worklog.find(params.expect(:id))
+      unless current_user_admin? || @worklog.user_id == current_user.id
+        redirect_to worklogs_path, alert: "You are not authorized to view this worklog."
+      end
     end
 
     def set_projects

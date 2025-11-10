@@ -94,6 +94,9 @@ class SubmissionsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_submission
       @submission = Submission.find(params.expect(:id))
+      unless current_user_admin? || @submission.user_id == current_user.id
+        redirect_to submissions_path, alert: "You are not authorized to view this submission."
+      end
     end
 
     # Only allow a list of trusted parameters through.

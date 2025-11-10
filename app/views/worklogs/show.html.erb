@@ -1,9 +1,10 @@
+<div class="form-card">
+  <%= render @worklog %>
 
-<%= render @worklog %>
-
-<div>
-  <%= link_to "Edit this worklog", edit_worklog_path(@worklog), class: "button" %> |
-  <%= link_to "Back to worklogs", worklogs_path, class: "button-secondary" %>
-
-  <%= button_to "Destroy this worklog", @worklog, method: :delete, class: "button-danger" %>
+  <div class="flex gap-x-3 mt-6">
+    <%= link_to "Back to worklogs", worklogs_path, class: "button-secondary" %>
+    <%= link_to "Edit this worklog", edit_worklog_path(@worklog), class: "button" %>
+    <%= button_to "Destroy this worklog", @worklog, method: :delete, class: "button-danger" %>
+  </div>
 </div>
+
