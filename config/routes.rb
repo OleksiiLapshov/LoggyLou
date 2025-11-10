@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :submissions, only: [ :index, :show, :create ] do
+  resources :submissions, only: [ :index, :show ] do
     member do
       patch :approve
       patch :reject
