@@ -64,4 +64,6 @@ end
 
 gem "tailwindcss-rails", "~> 4.3"
 
-gem 'csv'
+gem "csv"
+gem "chartkick"
+gem "groupdate"
