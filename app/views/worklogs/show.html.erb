@@ -3,8 +3,10 @@
 
   <div class="flex gap-x-3 mt-6">
     <%= link_to "Back to worklogs", worklogs_path, class: "button-secondary" %>
-    <%= link_to "Edit this worklog", edit_worklog_path(@worklog), class: "button" %>
-    <%= button_to "Destroy this worklog", @worklog, method: :delete, class: "button-danger" %>
+    <%= button_to "Edit this worklog", edit_worklog_path(@worklog), method: :get, class: @worklog.editable? ? "button" : "button-disabled", 
+                              disabled: !@worklog.editable? %>
+    <%= button_to "Destroy this worklog", @worklog, method: :delete, class: @worklog.editable? ? "button-danger" : "button-disabled", 
+                              disabled: !@worklog.editable? %>
   </div>
 </div>
 
