@@ -1,4 +1,5 @@
 class SubmissionsController < ApplicationController
+  before_action :require_signin
   before_action :set_submission, only: %i[ show approve reject export ]
   before_action :require_admin, only: %i[ approve reject ]
 
