@@ -4,15 +4,34 @@ class SubmissionsController < ApplicationController
 
   # GET /submissions or /submissions.json
   def index
+    @selected_month = params[:month]&.to_i || Date.today.month
+    @selected_year = params[:year]&.to_i || Date.today.year
+
+    first_day = Date.new(@selected_year, @selected_month, 1)
+
     if current_user_admin?
-      @submissions = Submission.all
+      @submissions = Submission.where(period_start: first_day.all_month).order(created_at: :desc)
     else
-      @submissions = current_user.submissions
+      @submissions = current_user.submissions.where(period_start: first_day.all_month).order(created_at: :desc)
     end
   end
 
   # GET /submissions/1 or /submissions/1.json
   def show
+    @project_hours = @submission.worklogs
+                              .joins(:project)
+                              .group("projects.name")
+                              .sum(:hours)
+
+    worklogs = @submission.worklogs.order(log_date: :desc)
+
+    # Building the hash manually to ensure all dates are included (DO NOT USE groupdate, for some reason it ignores day 1)
+    date_range = (@submission.period_start..@submission.period_end).to_a
+    hours_by_date = worklogs.group(:log_date).sum(:hours)
+
+    @worklogs_by_day = date_range.each_with_object({}) do |date, hash|
+      hash[date] = hours_by_date[date] || 0
+    end
   end
 
   def reject
