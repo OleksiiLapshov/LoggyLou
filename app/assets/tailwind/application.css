@@ -61,6 +61,11 @@
         border border-white/20 shadow-lg;
     }
 
+    .mini-form-card {
+        @apply inline-block mt-10 px-6 py-6 bg-white/50 backdrop-blur-md rounded-2xl
+        border border-white/20 shadow-lg;
+    }
+
     .h1-style {
         @apply text-3xl font-bold text-zinc-700 mb-6
     }

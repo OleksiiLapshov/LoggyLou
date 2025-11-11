@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
-  resources :submissions
+  resources :submissions, only: [ :index, :show ] do
+    member do
+      patch :approve
+      patch :reject
+      get :export
+    end
+  end
   resources :assignments
   resources :users
   root "worklogs#index"

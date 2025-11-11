@@ -27,17 +27,11 @@
               class: "button-success" %>
       <% end %>
 
-      <% period_start = Date.new(@selected_year, @selected_month, 1) %>
-      <% period_end   = period_start.end_of_month %>
-      <% unsubmitted = current_user.worklogs.for_period(period_start, period_end).not_submitted %>
-      <% if current_user.submissions.exists?(period_start: period_start, period_end: period_end) %>
-        <%= "Timesheet for #{period_start.strftime('%B %Y')} submitted." %>
-      <% end %>
-      <% if unsubmitted.sum(:hours) > 0 %>
-        <%= link_to "Submit Timesheet (#{unsubmitted.sum(:hours)} h)",
+      <% if @unsubmitted.sum(:hours) > 0 %>
+        <%= link_to "Submit Timesheet (#{@unsubmitted.sum(:hours)} h)",
               submit_timesheet_worklogs_path(month: @selected_month, year: @selected_year),
               data: { turbo_method: :post,
-                turbo_confirm: "Submit #{unsubmitted.sum(:hours)} hours for #{period_start.strftime('%B %Y')}?" },
+                turbo_confirm: "Submit #{@unsubmitted.sum(:hours)} hours for #{@first_day.strftime('%B %Y')}?" },
               class: "button-success" %>
       <% end %>
     <% end %>
@@ -48,6 +42,15 @@
   <div class="form-card">
     <h1 class="h1-style">My Worklogs</h1>
 
+    <%= column_chart @worklogs_by_day, 
+                      xtitle: "Date", 
+                      ytitle: "Hours", 
+                      colors: ["#4F46E5"], 
+                      height: "200px" %>
+
+    <section class="my-6">
+      <%= link_to "New worklog", new_worklog_path, class: "button-success" %>
+    </section>
     <table class="table-fixed w-full border border-zinc-500 border-collapse">
     <thead class="text-lf font-bold">
       <tr>
@@ -68,9 +71,9 @@
             <td class="border border-zinc-500 py-2 px-3">
               <div class="flex gap-1 justify-center">
                 <%= button_to "View", worklog,
+                              params: { month: params[:month], year: params[:year] }.compact_blank,
                               method: :get,
-                              class: worklog.editable? ? "button-secondary" : "button-disabled", 
-                              disabled: !worklog.editable? %>
+                              class: "button-secondary"%>
                 <%= button_to "Edit", edit_worklog_path(worklog),
                               method: :get,
                               class: worklog.editable? ? "button" : "button-disabled", 

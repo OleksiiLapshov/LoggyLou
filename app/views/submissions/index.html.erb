@@ -1,5 +1,27 @@
 <% content_for :title, "Submissions" %>
 
+<div class="form-card">
+  <%= form_with url: submissions_path, method: :get, local: true, class: "flex items-center gap-4" do |form| %>
+    <div>
+      <%= form.label :month, "Month:", class: "mr-2" %>
+      <%= form.select :month, 
+            Date::MONTHNAMES.compact.map.with_index(1) { |name, i| [name, i] },
+            { selected: @selected_month },
+            { class: "border border-zinc-500 rounded px-3 py-2" } %>
+    </div>
+    <div>
+      <%= form.label :year, "Year:", class: "mr-2" %>
+      <%= form.select :year, 
+          (Date.today.year - 2..Date.today.year + 1).to_a.reverse,
+          { selected: @selected_year },
+          { class: "border border-zinc-500 rounded px-3 py-2" } %>
+    </div>
+
+    <%= form.submit "Filter", class: "button" %>
+    <%= link_to "Reset", submissions_path, class: "button-secondary" %>
+  <% end %>
+</div>
+
 <div class="w-full">
   <div class="form-card">
     <h1 class="h1-style">Submitted Timesheets</h1>
@@ -10,9 +32,7 @@
           <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
             <%= render submission %>
             <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
-              <%= link_to "Show", submission, class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-              <%= link_to "Edit", edit_submission_path(submission), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-              <%= button_to "Destroy", submission, method: :delete, class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+              <%= link_to "Show", submission_path(submission, {month: params[:month], year: params[:year]}.compact_blank), data: { turbo: false }, class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
             </div>
           </div>
         <% end %>

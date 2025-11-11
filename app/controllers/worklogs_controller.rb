@@ -7,14 +7,24 @@ class WorklogsController < ApplicationController
 
   # GET /worklogs or /worklogs.json
   def index
-    @selected_month = params[:month]&.to_i || Date.today.month
-    @selected_year = params[:year]&.to_i || Date.today.year
+    @selected_month = params[:month].presence&.to_i || Date.today.month
+    @selected_year = params[:year].presence&.to_i || Date.today.year
 
-    selected_date = Date.new(@selected_year, @selected_month, 1)
+    @first_day = Date.new(@selected_year, @selected_month, 1)
+    last_day = @first_day.end_of_month
+    @unsubmitted = current_user.worklogs.for_period(@first_day, last_day).not_submitted
     if current_user_admin?
-      @worklogs = Worklog.where(log_date: selected_date.all_month).order(log_date: :desc)
+      @worklogs = Worklog.where(log_date: @first_day.all_month).order(log_date: :desc)
     else
-      @worklogs = current_user.worklogs.where(log_date: selected_date.all_month).order(log_date: :desc)
+      @worklogs = current_user.worklogs.where(log_date: @first_day.all_month).order(log_date: :desc)
+
+      # Building the hash manually to ensure all dates are included (DO NOT USE groupdate, for some reason it ignores day 1)
+      date_range = (@first_day..last_day).to_a
+      hours_by_date = @worklogs.group(:log_date).sum(:hours)
+
+      @worklogs_by_day = date_range.each_with_object({}) do |date, hash|
+        hash[date] = hours_by_date[date] || 0
+      end
     end
   end
 
@@ -112,7 +122,9 @@ class WorklogsController < ApplicationController
       end
 
       # Check if there is a submission for this period
-      if current_user.submissions.exists?(period_start: period_start, period_end: period_end)
+      if current_user.submissions.where(period_start: period_start, period_end: period_end)
+                                 .where.not(status: :rejected)
+                                 .exists?
         redirect_to worklogs_path(month: month, year: year),
                 alert: "Already submitted for #{period_start.strftime('%B %Y')}."
         return
@@ -134,6 +146,9 @@ class WorklogsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_worklog
       @worklog = Worklog.find(params.expect(:id))
+      unless current_user_admin? || @worklog.user_id == current_user.id
+        redirect_to worklogs_path, alert: "You are not authorized to view this worklog."
+      end
     end
 
     def set_projects
