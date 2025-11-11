@@ -7,8 +7,8 @@ class WorklogsController < ApplicationController
 
   # GET /worklogs or /worklogs.json
   def index
-    @selected_month = params[:month]&.to_i || Date.today.month
-    @selected_year = params[:year]&.to_i || Date.today.year
+    @selected_month = params[:month].presence&.to_i || Date.today.month
+    @selected_year = params[:year].presence&.to_i || Date.today.year
 
     @first_day = Date.new(@selected_year, @selected_month, 1)
     last_day = @first_day.end_of_month
