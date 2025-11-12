@@ -1,35 +1,20 @@
-# Use slim Ruby image to keep size low
-FROM ruby:3.3-slim AS base
+# Dockerfile
+FROM ruby:3.3-slim
 
-# Default env vars
-ENV RAILS_ENV=production \
-    BUNDLE_DEPLOYMENT=true \
-    BUNDLE_PATH=/bundle \
-    LANG=C.UTF-8
-
-# Install base packages
 RUN apt-get update -qq && apt-get install -y --no-install-recommends \
-  build-essential libpq-dev git curl nodejs npm yarn \
-  && rm -rf /var/lib/apt/lists/*
+    build-essential libpq-dev nodejs curl
 
 WORKDIR /app
 
-# Copy Gemfiles and install gems
+# Install Ruby dependencies
 COPY Gemfile Gemfile.lock ./
 RUN bundle install --jobs 4 --retry 3
 
-# Install JS deps (for Tailwind)
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
-
-# Copy app code
+# Copy the rest of the app
 COPY . .
 
-# Precompile assets
+# Precompile assets (if needed)
 RUN bundle exec rails assets:precompile
 
-# Expose app port
 EXPOSE 3000
-
-# Default command
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
