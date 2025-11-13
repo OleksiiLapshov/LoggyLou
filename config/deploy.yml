@@ -8,6 +8,10 @@ servers:
   web:
     - 164.92.228.202
 
+proxy:
+  ssl: true
+  host: work-log.app
+
 registry:
   username: izraphail
   password:
