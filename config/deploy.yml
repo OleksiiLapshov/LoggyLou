@@ -38,10 +38,9 @@ accessories:
     host: 164.92.228.202
     
     env:
-      clear:
-        POSTGRES_DB: loggy_lou
-        POSTGRES_USER: loggy_lou
       secret:
         - POSTGRES_PASSWORD
+        - POSTGRES_USER
+        - POSTGRES_DB
     directories:
       - "/root/data/loggy_lou/db:/var/lib/postgresql/data"
