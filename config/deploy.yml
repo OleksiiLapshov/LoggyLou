@@ -18,8 +18,7 @@ builder:
   arch: amd64
 
 env:
-  clear:
-    DATABASE_URL: postgresql://<%= ENV["POSTGRES_USER"] %>:<%= ENV["POSTGRES_PASSWORD"] %>@loggy_lou-db:5432/<%= ENV["POSTGRES_DB"] %>
+  clear: {}
   secret:
     - RAILS_MASTER_KEY
     - POSTGRES_USER
