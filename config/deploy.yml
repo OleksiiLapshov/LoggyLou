@@ -4,13 +4,10 @@ service: loggy_lou
 # Name of the container image.
 image: izraphail/loggy_lou
 
-# Deploy to these servers.
 servers:
   web:
     - 164.92.228.202
 
-
-# Credentials for your image host.
 registry:
   username: izraphail
   password:
@@ -22,9 +19,9 @@ builder:
 
 env:
   clear:
-    DB_HOST: loggy_lou-db
-    DB_NAME: loggy_lou
-    DB_USER: loggy_lou
+    DB_HOST: loggy_lou-db 
+    POSTGRES_DB: loggy_lou
+    POSTGRES_USER: loggy_lou
   secret:
     - RAILS_MASTER_KEY
     - POSTGRES_PASSWORD
@@ -32,8 +29,6 @@ env:
 ssh:
   user: root
 
-# Use a persistent storage volume.
-#
 volumes:
   - "/root/data/loggy_lou/storage:/rails/storage"
 
@@ -41,7 +36,7 @@ accessories:
   db:
     image: postgres:16-alpine
     host: 164.92.228.202
-    port: 5432
+    
     env:
       clear:
         POSTGRES_DB: loggy_lou
@@ -49,5 +44,4 @@ accessories:
       secret:
         - POSTGRES_PASSWORD
     directories:
-      - data:/var/lib/postgresql/data
-
+      - "/root/data/loggy_lou/db:/var/lib/postgresql/data"
