@@ -19,11 +19,12 @@ builder:
 
 env:
   clear:
-    DB_HOST: loggy_lou-db 
-    POSTGRES_DB: loggy_lou
-    POSTGRES_USER: loggy_lou
+    DATABASE_URL: postgresql://<%= ENV["POSTGRES_USER"] %>:<%= ENV["POSTGRES_PASSWORD"] %>@loggy_lou-db:5432/<%= ENV["POSTGRES_DB"] %>
   secret:
+    # We still need the secrets here for the interpolation above!
     - RAILS_MASTER_KEY
+    - POSTGRES_USER
+    - POSTGRES_DB
     - POSTGRES_PASSWORD
 
 ssh:
