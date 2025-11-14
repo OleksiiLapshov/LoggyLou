@@ -1,6 +1,8 @@
 <footer class="mt-auto bg-white/50 backdrop-blur-md py-3">
-    <div class="text-zinc-900 ml-3">
-        Made by 
-        <a href="https://github.com/OleksiiLapshov" class="underline">Tachyon_Shift</a>
-    </div>
+    <% if current_user %>
+        <div class="text-zinc-900 ml-3">
+            Made by 
+            <a href="https://github.com/OleksiiLapshov" class="underline">Tachyon_Shift</a>
+        </div>
+    <% end %>
 </footer>

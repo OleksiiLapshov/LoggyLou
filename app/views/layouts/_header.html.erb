@@ -26,7 +26,7 @@
                     </li>
                 <% end %>
                 <div class="h-8 w-px bg-gray-300"></div>
-            <% end %>
+            
                 <% if current_user %>
                     <li class="ml-10">
                         <%= link_to current_user.first_name, user_path(current_user), class: "underline" %>
@@ -41,6 +41,7 @@
                         <%= link_to "Sign In", signin_path, class: "button-secondary" %>
                     </li>
                 <% end%>
+            <% end %>
         </ul>
     </nav>
 </header>

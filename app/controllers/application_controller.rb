@@ -10,7 +10,7 @@ private
 
   def require_signin
     unless current_user
-      redirect_to new_session_url, alert: "You must be logged in!"
+      redirect_to signin_path, alert: "You must be logged in!"
     end
   end
 

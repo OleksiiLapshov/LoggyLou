@@ -58,12 +58,14 @@
             </div>
         <% end %>
         
-        <%= link_to "Cancel", root_url, class: "button-secondary" %>
-        <% if user.new_record? %>
-            <%= f.submit "Create Employee", class: "button-success" %>
-        <% else %>
-            <%= f.submit "Update Employee", class: "button-success" %>
-        <% end %>
+        <div class="pt-6">
+            <%= link_to "Cancel", root_url, class: "button-secondary" %>
+            <% if user.new_record? %>
+                <%= f.submit "Create Employee", class: "button-success" %>
+            <% else %>
+                <%= f.submit "Update Employee", class: "button-success" %>
+            <% end %>
+        </div>
     </div>
 
 <% end %>
