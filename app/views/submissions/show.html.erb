@@ -51,9 +51,22 @@
                     id: "reject-btn",
                     class: "bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700" %>
     <% end %>
-    <% if @submission.approved? %>
-      <%= link_to "Download CSV", export_submission_path(@submission, format: :csv),
-                    class: "bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700" %>
+    <% if @submission.approved? && @submission.worklogs.any? %>
+      <div class"flex flex-wrap gap-2 items-center">
+        <span class="font-bold">Export:</span>
+        
+        <%# 1. The "Export All" button %>
+        <%= link_to "All (CSV)", 
+              export_submission_path(@submission, format: :csv),
+              class: "button-success" %>
+        
+        <%# 2. Dynamic project-specific buttons %>
+        <% @projects.each do |project| %>
+          <%= link_to "#{project.name} (CSV)",
+                export_submission_path(@submission, format: :csv, project_id: project.id),
+                class: "button" %>
+        <% end %>
+      </div>
     <% end %>
   </div>
 </div>

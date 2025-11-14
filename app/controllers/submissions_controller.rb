@@ -24,6 +24,10 @@ class SubmissionsController < ApplicationController
                               .group("projects.name")
                               .sum(:hours)
 
+    @projects = @submission.worklogs
+                          .joins(:project)
+                          .select("projects.id, projects.name").distinct
+
     worklogs = @submission.worklogs.order(log_date: :desc)
 
     # Building the hash manually to ensure all dates are included (DO NOT USE groupdate, for some reason it ignores day 1)
@@ -51,10 +55,24 @@ class SubmissionsController < ApplicationController
   end
 
   def export
+    worklogs_to_export = @submission.worklogs
+    filename_addition = "_all"
+
+    if params[:project_id].present?
+      project = Project.find(params[:project_id])
+
+      if project
+        worklogs_to_export = worklogs_to_export.where(project_id: project.id)
+        filename_addition = "_#{project.name.parameterize}"
+      end
+    end
+
+    filename = "worklogs_#{@submission.period_start}_#{@submission.period_end}_#{filename_addition}.csv"
+
     respond_to do |format|
       format.csv do
-        send_data generate_csv(@submission.worklogs),
-                  filename: "worklogs_#{@submission.period_start}_#{@submission.period_end}.csv",
+        send_data generate_csv(worklogs_to_export),
+                  filename: filename,
                   type: "text/csv",
                   disposition: "attachment"
       end
