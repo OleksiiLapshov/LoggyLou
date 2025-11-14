@@ -32,12 +32,12 @@
         </div>
         
         <div class="flex gap-4 py-2 items-center">
-            <%= f.label :password, class: "font-bold min-w-[120px]" %>
+            <%= f.label :password, (user.new_record? ? "Password" : "New password"), class: "font-bold min-w-[120px]" %>
             <%= f.password_field :password, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
         </div>
         
         <div class="flex gap-4 py-2 items-center">
-            <%= f.label :password_confirmation, "Confirm password", class: "font-bold min-w-[120px]" %>
+            <%= f.label :password_confirmation, (user.new_record? ? "Confirm password" : "Confirm new password"), class: "font-bold min-w-[120px]" %>
             <%= f.password_field :password_confirmation, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
         </div>
         <% if current_user_admin? %>
