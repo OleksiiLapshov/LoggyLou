@@ -1,5 +1,4 @@
 # Name of your application. Used to uniquely configure containers.
-# HIDE!
 service: loggy_lou
 
 # Name of the container image.
@@ -7,11 +6,11 @@ image: izraphail/loggy_lou
 
 servers:
   web:
-    - 164.92.228.202
+    - 0.0.0.0
 
 proxy:
   ssl: true
-  host: work-log.app
+  host: example.com
 
 registry:
   username: izraphail
@@ -39,7 +38,7 @@ volumes:
 accessories:
   db:
     image: postgres:16-alpine
-    host: 164.92.228.202
+    host: 0.0.0.0
     
     env:
       secret:
