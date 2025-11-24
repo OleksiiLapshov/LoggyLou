@@ -1,0 +1,32 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "Worklogs") do |sheet|
+
+  header_style = wb.styles.add_style(b: true)
+
+  sheet.add_row [
+    "Date",
+    "Employee",
+    "Hours",
+    "Notes",
+    "Project",
+    "Company"
+  ], style: header_style
+
+  @worklogs_to_export.order(:log_date).each do |worklog|
+    sheet.add_row [
+      worklog.log_date.strftime("%Y-%m-%d"), # Date
+      worklog.user.full_name,                # Employee
+      worklog.hours,                         # Hours (Keep as number for Excel math)
+      worklog.note,                          # Notes
+      worklog.project.name,                  # Project
+      worklog.project.company                # Company
+    ]
+  end
+
+  sheet.add_row []
+
+  total_hours = @worklogs_to_export.sum(:hours)
+  
+  sheet.add_row ["TOTAL", "", total_hours, "", "", ""], style: header_style
+end

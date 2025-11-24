@@ -55,26 +55,30 @@ class SubmissionsController < ApplicationController
   end
 
   def export
-    worklogs_to_export = @submission.worklogs
+    @worklogs_to_export = @submission.worklogs
     filename_addition = "_all"
 
     if params[:project_id].present?
       project = Project.find(params[:project_id])
 
       if project
-        worklogs_to_export = worklogs_to_export.where(project_id: project.id)
+        @worklogs_to_export = @worklogs_to_export.where(project_id: project.id)
         filename_addition = "_#{project.name.parameterize}"
       end
     end
 
-    filename = "worklogs_#{@submission.period_start}_#{@submission.period_end}_#{filename_addition}.csv"
+    filename = "worklogs_#{@submission.user.last_name}_#{@submission.user.first_name}_#{@submission.period_start}_#{@submission.period_end}_#{filename_addition}"
 
     respond_to do |format|
       format.csv do
         send_data generate_csv(worklogs_to_export),
-                  filename: filename,
                   type: "text/csv",
-                  disposition: "attachment"
+                  disposition: "attachment",
+                  filename: "#{filename}.csv"
+      end
+
+      format.xlsx do
+        render xlsx: "export", filename: "#{filename}.xlsx"
       end
     end
   end

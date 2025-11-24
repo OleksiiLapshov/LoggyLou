@@ -99,6 +99,10 @@ class WorklogsController < ApplicationController
                   type: "text/csv",
                   disposition: "attachment"
       end
+
+      format.xlsx do
+        render xlsx: "export", filename: "worklogs_#{@selected_year}_#{@selected_month.to_s.rjust(2, '0')}.xlsx"
+      end
     end
   end
 
