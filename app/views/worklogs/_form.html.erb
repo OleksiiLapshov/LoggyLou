@@ -1,13 +1,7 @@
 <%= form_with(model: worklog) do |form| %>
   <% if worklog.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(worklog.errors.count, "error") %> prohibited this worklog from being saved:</h2>
-
-      <ul>
-        <% worklog.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+      <h2><%= pluralize(worklog.errors.count, "error") %> prohibited this worklog from being saved</h2>
     </div>
   <% end %>
   <div>
@@ -36,9 +30,9 @@
       <%= form.label :project_id, style: "display: block", class: "font-bold min-w-[120px]" %>
       <%= form.collection_select :project_id, @projects, :id, :name, { prompt: "Select a Project" },
       { class: "form-control rounded-sm border border-zinc-900 bg-zinc-200"} %>
-      <% if worklog.errors[:project_id].any? %>
+      <% if worklog.errors[:project].any? %>
         <div class="text-red-600">
-          <%= worklog.errors[:project_id].first %>
+          <%= worklog.errors[:project].first %>
         </div>
       <% end %>
     </div>
