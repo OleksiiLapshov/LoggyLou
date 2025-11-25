@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 @layer components {
     .menu-item{
         @apply block flex h-full cursor-pointer font-bold text-zinc-200 hover:text-zinc-200 
@@ -8,15 +10,23 @@
 
     .button {
         @apply inline-flex items-center justify-center px-4 py-2 text-sm font-bold rounded-md
-           text-white bg-orange-400 hover:bg-orange-500 focus:outline-none focus:ring-2 
-           focus:ring-orange-500 focus:ring-offset-2 transition-colors duration-200 
-           cursor-pointer no-underline;
+        text-white
+        /* Light Mode */
+        bg-orange-400 hover:bg-orange-500 
+
+        /* Dark Mode */
+        dark:bg-sky-600 dark:hover:bg-sky-800 dark:text-zinc-200
+        focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2
+        dark:focus:ring-offset-zinc-900 
+        transition-colors duration-200 cursor-pointer no-underline;
     }
 
     .button-secondary {
         @apply inline-flex items-center justify-center px-4 py-2 text-sm font-bold rounded-md
            text-orange-700 bg-orange-100 hover:bg-orange-200 focus:outline-none focus:ring-2 
-           focus:ring-orange-500 focus:ring-offset-2 transition-colors duration-200 
+           focus:ring-orange-500 
+           dark:bg-stone-600 dark:hover:bg-stone-900 dark:text-zinc-200 dark:border-stone-600
+           focus:ring-offset-2 transition-colors duration-200 
            cursor-pointer no-underline border border-orange-300;
     }
 
@@ -44,8 +54,9 @@
 
     .button-success {
         @apply inline-flex items-center justify-center px-4 py-2 text-sm font-bold rounded-md
-           text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 
-           focus:ring-green-500 focus:ring-offset-2 transition-colors duration-200 
+           text-zinc-200 bg-green-500 hover:bg-green-600 focus:ring-green-500
+           dark:bg-emerald-600 dark:hover:bg-emerald-800
+           focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200 
            cursor-pointer no-underline;
     }
 
@@ -67,7 +78,7 @@
     }
 
     .h1-style {
-        @apply text-3xl font-bold text-zinc-700 mb-6
+        @apply text-3xl font-bold text-zinc-700 mb-6 dark:text-zinc-900;
     }
 
 }

@@ -1,5 +1,5 @@
 <header>
-    <nav class="sticky z-10 flex top-0 bg-gradient-to-r bg-orange-400">
+    <nav class="sticky z-10 flex top-0 bg-gradient-to-r bg-orange-400 dark:bg-slate-950">
         <ul class="flex items-center justify-end ml-auto mr-6">
             <% if current_user %>
                 <li>
@@ -29,7 +29,7 @@
             
                 <% if current_user %>
                     <li class="ml-10">
-                        <%= link_to current_user.first_name, user_path(current_user), class: "underline" %>
+                        <%= link_to current_user.first_name, user_path(current_user), class: "underline dark:text-zinc-200" %>
                     </li>
                     <li class="ml-6">
                         <%= link_to "Sign Out", session_path,

@@ -1,8 +1,17 @@
-<footer class="mt-auto bg-white/50 backdrop-blur-md py-3">
+<footer class="mt-auto bg-white/50 backdrop-blur-md py-3 flex">
     <% if current_user %>
         <div class="text-zinc-900 ml-3">
             Made by 
             <a href="https://github.com/OleksiiLapshov" class="underline">Tachyon_Shift</a>
         </div>
     <% end %>
+    <div data-controller="theme" class="justify-end ml-auto pr-3">
+        <button 
+            data-action="click->theme#toggle" 
+            class="p-1 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+            
+            <span class="font-bold">Dark/Light 🌗</span>
+            
+        </button>
+    </div>
 </footer>
