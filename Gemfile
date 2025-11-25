@@ -65,6 +65,8 @@ end
 gem "tailwindcss-rails", "~> 4.3"
 
 gem "csv"
+gem "caxlsx"
+gem "caxlsx_rails"
 gem "chartkick"
 gem "groupdate"
 gem "pg"

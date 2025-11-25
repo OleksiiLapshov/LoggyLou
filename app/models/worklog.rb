@@ -2,9 +2,13 @@ class Worklog < ApplicationRecord
 
   belongs_to :project
   belongs_to :user
-  validates :hours, :note, :project, :log_date, presence: true
-
   belongs_to :submission, optional: true
+
+  validates :hours, presence: true, numericality: { greater_than: 0 }
+
+  validates :note, length: { minimum: 6 }
+
+  validates :log_date, presence: true
 
   scope :not_submitted, -> { where(submission_id: nil) }
 

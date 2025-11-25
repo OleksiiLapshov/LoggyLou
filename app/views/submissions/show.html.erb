@@ -14,33 +14,14 @@
                       colors: ["#4F46E5"], 
                       height: "300px" %>
     </div>
-    <table class="table-fixed w-full border border-zinc-500 border-collapse my-6">
-      <thead class="text-lf font-bold">
-        <tr>
-          <td class="border border-zinc-500 py-2 px-3 w-32">Date</td>
-          <td class="border border-zinc-500 py-2 px-3 w-32">Employee</td>
-          <td class="border border-zinc-500 py-2 px-3 w-18">Hours</td>
-          <td class="border border-zinc-500 py-2 px-3 w-48">Project</td>
-          <td class="border border-zinc-500 py-2 px-3">Notes</td>
-        </tr>
-      </thead>
-        <tbody>
-          <% @submission.worklogs.each do |worklog| %>
-            <tr>
-              <td class="border border-zinc-500 py-2 px-3"><%= worklog.log_date %></td>
-              <td class="border border-zinc-500 py-2 px-3"><%= worklog.user.full_name %></td>
-              <td class="border border-zinc-500 py-2 px-3"><%= worklog.hours %></td>
-              <td class="border border-zinc-500 py-2 px-3"><%= worklog.project.name %></td>
-              <td class="border border-zinc-500 py-2 px-3" title="<%= worklog.note %>"><%= truncate(worklog.note, length: 100) %></td>
-            </tr>
-          <% end %>
-        </tbody>
-    </table>
+
+    <%= render "shared/worklogs_table", worklogs: @submission.worklogs %>
+
   <% else %>
     <p class="justify-center py-4"><%= "Worklogs were rejected: #{@submission.updated_at}" %></p>
   <% end %>
 
-  <div class="flex gap-x-3">
+  <div class="flex gap-x-3 pt-6">
     <%= link_to "Back to submissions", submissions_path( {month: params[:month], year: params[:year]}.compact_blank ), class: "button-secondary" %>
     <% if @submission.draft? && current_user_admin? %>
       <%= button_to "Approve", approve_submission_path(@submission),
@@ -51,22 +32,55 @@
                     id: "reject-btn",
                     class: "bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700" %>
     <% end %>
+  </div>
+  <div class="mt-6 gap-3">
     <% if @submission.approved? && @submission.worklogs.any? %>
-      <div class"flex flex-wrap gap-2 items-center">
-        <span class="font-bold">Export:</span>
+      <details class="group">
         
-        <%# 1. The "Export All" button %>
-        <%= link_to "All (CSV)", 
-              export_submission_path(@submission, format: :csv),
-              class: "button-success" %>
-        
-        <%# 2. Dynamic project-specific buttons %>
-        <% @projects.each do |project| %>
-          <%= link_to "#{project.name} (CSV)",
-                export_submission_path(@submission, format: :csv, project_id: project.id),
-                class: "button" %>
-        <% end %>
-      </div>
+        <summary class="list-none [&::-webkit-details-marker]:hidden cursor-pointer text-indigo-500 dark:text-green-400 font-bold hover:underline mb-4 flex items-center gap-2 select-none">
+          
+          <span>Export options</span>
+          
+          <svg class="w-4 h-4 transition-transform duration-200 group-open:rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+          
+        </summary>
+
+        <div class="space-y-4 p-4 border border-zinc-200 dark:border-zinc-700 rounded-lg bg-zinc-50/50 dark:bg-zinc-100/50">
+          
+          <div class="flex items-center gap-4">
+            <span class="font-bold text-body w-28">Export CSV:</span>
+            <div class="flex gap-2">
+              <%= link_to "All (CSV)", 
+                export_submission_path(@submission, format: :csv),
+                class: "button-success" %>
+
+              <% @projects.each do |project| %>
+              <%= link_to "#{project.name} (CSV)",
+                    export_submission_path(@submission, format: :csv, project_id: project.id),
+                    class: "button" %>
+              <% end %>
+              </div>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <span class="font-bold text-body w-28">Export XLSX:</span>
+            <div class="flex gap-2">
+              <%= link_to "All (XLSX)", 
+                    export_submission_path(@submission, format: :xlsx),
+                    class: "button-success" %>
+              
+              <%# 2. Dynamic project-specific buttons %>
+              <% @projects.each do |project| %>
+                <%= link_to "#{project.name} (XLSX)",
+                      export_submission_path(@submission, format: :xlsx, project_id: project.id),
+                      class: "button" %>
+              <% end %>
+              </div>
+          </div>
+        </div>
+      </details>
     <% end %>
   </div>
 </div>

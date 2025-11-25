@@ -25,6 +25,9 @@
         <%= link_to "Export CSV", 
               export_worklogs_path(month: @selected_month, year: @selected_year, format: :csv),
               class: "button-success" %>
+        <%= link_to "Export EXCEL", 
+              export_worklogs_path(month: @selected_month, year: @selected_year, format: :xlsx),
+              class: "button-success" %>
       <% end %>
 
       <% if @unsubmitted.sum(:hours) > 0 %>
@@ -38,84 +41,31 @@
   <% end %>
 </div>
 
-<% if !current_user_admin? %>
-  <div class="form-card">
-    <h1 class="h1-style">My Worklogs</h1>
+<div class="form-card">
+  <h1 class="h1-style">Worklogs</h1>
 
+  <% if !current_user_admin? %>
     <%= column_chart @worklogs_by_day, 
                       xtitle: "Date", 
                       ytitle: "Hours", 
                       colors: ["#4F46E5"], 
                       height: "200px" %>
-
-    <section class="my-6">
-      <%= link_to "New worklog", new_worklog_path, class: "button-success" %>
-    </section>
-    <table class="table-fixed w-full border border-zinc-500 border-collapse">
-    <thead class="text-lf font-bold">
-      <tr>
-        <td class="border border-zinc-500 py-2 px-3 w-32">Date</td>
-        <td class="border border-zinc-500 py-2 px-3 w-18">Hours</td>
-        <td class="border border-zinc-500 py-2 px-3 w-48">Project</td>
-        <td class="border border-zinc-500 py-2 px-3">Notes</td>
-        <td class="border border-zinc-500 py-2 px-3 w-48">Actions</td>
-      </tr>
-    </thead>
-      <tbody>
-        <% @worklogs.each do |worklog| %>
-          <tr>
-            <td class="border border-zinc-500 py-2 px-3"><%= worklog.log_date%></td>
-            <td class="border border-zinc-500 py-2 px-3"><%= worklog.hours %></td>
-            <td class="border border-zinc-500 py-2 px-3"><%= worklog.project.name %></td>
-            <td class="border border-zinc-500 py-2 px-3" title="<%= worklog.note %>"><%= truncate(worklog.note, length: 100) %></td>
-            <td class="border border-zinc-500 py-2 px-3">
-              <div class="flex gap-1 justify-center">
-                <%= button_to "View", worklog,
-                              params: { month: params[:month], year: params[:year] }.compact_blank,
-                              method: :get,
-                              class: "button-secondary"%>
-                <%= button_to "Edit", edit_worklog_path(worklog),
-                              method: :get,
-                              class: worklog.editable? ? "button" : "button-disabled", 
-                              disabled: !worklog.editable? %>
-              </div>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+  
+  <% end %>
+  
+  <% if !current_user_admin? %>
     <section class="mt-6">
       <%= link_to "New worklog", new_worklog_path, class: "button-success" %>
     </section>
-  </div>
-<% end %>
+  <% end %>
 
-<% if current_user_admin? %>
-  <div class="form-card">
-    <h1 class="h1-style">Employee's Worklogs</h1>
+  <%= render "shared/worklogs_table", worklogs: @worklogs %>
 
-    <table class="table-fixed w-full border border-zinc-500 border-collapse">
-    <thead class="text-lf font-bold">
-      <tr>
-        <td class="border border-zinc-500 py-2 px-3 w-32">Date</td>
-        <td class="border border-zinc-500 py-2 px-3 w-32">Employee</td>
-        <td class="border border-zinc-500 py-2 px-3 w-18">Hours</td>
-        <td class="border border-zinc-500 py-2 px-3 w-48">Project</td>
-        <td class="border border-zinc-500 py-2 px-3">Notes</td>
-      </tr>
-    </thead>
-      <tbody>
-        <% @worklogs.each do |worklog| %>
-          <tr>
-            <td class="border border-zinc-500 py-2 px-3"><%= worklog.log_date %></td>
-            <td class="border border-zinc-500 py-2 px-3"><%= worklog.user.full_name %></td>
-            <td class="border border-zinc-500 py-2 px-3"><%= worklog.hours %></td>
-            <td class="border border-zinc-500 py-2 px-3"><%= worklog.project.name %></td>
-            <td class="border border-zinc-500 py-2 px-3" title="<%= worklog.note %>"><%= truncate(worklog.note, length: 100) %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-<% end %>
+  <% if !current_user_admin? %>
+    <section class="mt-6">
+      <%= link_to "New worklog", new_worklog_path, class: "button-success" %>
+    </section>
+  <% end %>
+</div>
+
 

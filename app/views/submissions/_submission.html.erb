@@ -1,7 +1,7 @@
 <div id="<%= dom_id submission %>" class="w-full sm:w-auto flex gap-x-4">
   <div>
     <strong class="block font-medium mb-1">Employee:</strong>
-    <%= "#{submission.user.first_name} #{submission.user.last_name}" %>
+    <%= "#{submission.user.full_name}" %>
   </div>
   <div>
     <strong class="block font-medium mb-1">Period start:</strong>

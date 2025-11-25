@@ -11,9 +11,9 @@ class SubmissionsController < ApplicationController
     first_day = Date.new(@selected_year, @selected_month, 1)
 
     if current_user_admin?
-      @submissions = Submission.where(period_start: first_day.all_month).order(created_at: :desc)
+      @submissions = Submission.includes(:user, :worklogs).where(period_start: first_day.all_month).order(created_at: :desc)
     else
-      @submissions = current_user.submissions.where(period_start: first_day.all_month).order(created_at: :desc)
+      @submissions = current_user.submissions.includes(:worklogs).where(period_start: first_day.all_month).order(created_at: :desc)
     end
   end
 
@@ -55,26 +55,30 @@ class SubmissionsController < ApplicationController
   end
 
   def export
-    worklogs_to_export = @submission.worklogs
+    @worklogs_to_export = @submission.worklogs.includes(:user, :project)
     filename_addition = "_all"
 
     if params[:project_id].present?
       project = Project.find(params[:project_id])
 
       if project
-        worklogs_to_export = worklogs_to_export.where(project_id: project.id)
+        @worklogs_to_export = @worklogs_to_export.where(project_id: params[:project_id])
         filename_addition = "_#{project.name.parameterize}"
       end
     end
 
-    filename = "worklogs_#{@submission.period_start}_#{@submission.period_end}_#{filename_addition}.csv"
+    filename = "worklogs_#{@submission.user.full_name}_#{@submission.period_start}_#{@submission.period_end}_#{filename_addition}"
 
     respond_to do |format|
       format.csv do
-        send_data generate_csv(worklogs_to_export),
-                  filename: filename,
+        send_data generate_csv(@worklogs_to_export),
                   type: "text/csv",
-                  disposition: "attachment"
+                  disposition: "attachment",
+                  filename: "#{filename}.csv"
+      end
+
+      format.xlsx do
+        render xlsx: "export", filename: "#{filename}.xlsx"
       end
     end
   end
