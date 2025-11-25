@@ -19,7 +19,7 @@
           <tr>
             <td class="border border-zinc-500 py-2 px-3"><%= worklog.log_date%></td>
             <% if current_user_admin? %>
-                <td class="border border-zinc-500 py-2 px-3"><%= "#{worklog.user.first_name} #{worklog.user.last_name}" %></td>
+                <td class="border border-zinc-500 py-2 px-3"><%= "#{worklog.user.full_name}" %></td>
             
             <% end %>
             <td class="border border-zinc-500 py-2 px-3"><%= worklog.hours %></td>

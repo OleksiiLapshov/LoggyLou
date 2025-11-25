@@ -67,7 +67,7 @@ class SubmissionsController < ApplicationController
       end
     end
 
-    filename = "worklogs_#{@submission.user.last_name}_#{@submission.user.first_name}_#{@submission.period_start}_#{@submission.period_end}_#{filename_addition}"
+    filename = "worklogs_#{@submission.user.full_name}_#{@submission.period_start}_#{@submission.period_end}_#{filename_addition}"
 
     respond_to do |format|
       format.csv do

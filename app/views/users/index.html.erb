@@ -10,7 +10,7 @@
         <tbody>
             <% @users.each do |u| %>
                 <tr>
-                    <td class="border border-zinc-500 py-2 px-3"><%= u.first_name %> <%= u.last_name %></td>
+                    <td class="border border-zinc-500 py-2 px-3"><%= u.full_name %></td>
                     <td class="border border-zinc-500 py-2 px-3"><%= u.email %></td>
                     <td class="border border-zinc-500 py-2 px-3"><%= u.date_of_birth ? u.date_of_birth : "N/A" %></td>
                     <td class="border border-zinc-500 py-2 px-3"><%= link_to "View", u, class: "button-secondary" %> <%= link_to "Edit", edit_user_path(u), class: "button" %></td>
