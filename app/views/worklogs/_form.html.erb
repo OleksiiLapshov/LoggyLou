@@ -18,7 +18,7 @@
 
     <div class="flex gap-4 py-2">
       <%= form.label :note, style: "display: block", class: "font-bold min-w-[120px]" %>
-      <%= form.textarea :note, rows: 3, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
+      <%= form.textarea :note, rows: 5, class: "rounded-sm border border-zinc-900 bg-zinc-200 min-w-[360px]" %>
       <% if worklog.errors[:note].any? %>
         <div class="text-red-600">
           <%= worklog.errors[:note].first %>
