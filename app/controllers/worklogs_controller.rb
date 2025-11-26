@@ -14,9 +14,9 @@ class WorklogsController < ApplicationController
     last_day = @first_day.end_of_month
     @unsubmitted = current_user.worklogs.for_period(@first_day, last_day).not_submitted
     if current_user_admin?
-      @worklogs = Worklog.where(log_date: @first_day.all_month).order(log_date: :desc)
+      @worklogs = Worklog.includes(:user, :project).where(log_date: @first_day.all_month).order(log_date: :desc)
     else
-      @worklogs = current_user.worklogs.where(log_date: @first_day.all_month).order(log_date: :desc)
+      @worklogs = current_user.worklogs.includes(:project).where(log_date: @first_day.all_month).order(log_date: :desc)
 
       # Building the hash manually to ensure all dates are included (DO NOT USE groupdate, for some reason it ignores day 1)
       date_range = (@first_day..last_day).to_a
