@@ -41,16 +41,17 @@
   <% end %>
 </div>
 
-<div class="form-card">
+<div class="form-card mb-6">
   <h1 class="h1-style">Worklogs</h1>
-
-  <% if !current_user_admin? %>
-    <%= column_chart @worklogs_by_day, 
-                      xtitle: "Date", 
-                      ytitle: "Hours", 
-                      colors: ["#4F46E5"], 
-                      height: "200px" %>
   
+  <% if !current_user_admin? %>
+    <div class="form-card">
+      <%= column_chart @worklogs_by_day, 
+                        xtitle: "Date", 
+                        ytitle: "Hours", 
+                        colors: ["#4F46E5"], 
+                        height: "200px" %>
+    </div>
   <% end %>
   
   <% if !current_user_admin? %>

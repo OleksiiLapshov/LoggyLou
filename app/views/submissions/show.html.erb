@@ -6,7 +6,7 @@
   <%= render @submission %>
 
   <% if @submission.worklogs.count > 0 %>
-    <div class="flex">
+    <div class="flex form-card">
       <%= pie_chart @project_hours, donut: true, height: "250px", colors: ["#4F46E5", "#22C55E", "#F59E0B", "#EF4444"] %>
       <%= column_chart @worklogs_by_day, 
                       xtitle: "Date", 
