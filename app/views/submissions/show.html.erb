@@ -15,7 +15,7 @@
                       height: "300px" %>
     </div>
 
-    <%= render "shared/worklogs_table", worklogs: @submission.worklogs %>
+    <%= render "shared/worklogs_table", worklogs: @worklogs %>
 
   <% else %>
     <p class="justify-center py-4"><%= "Worklogs were rejected: #{@submission.updated_at}" %></p>

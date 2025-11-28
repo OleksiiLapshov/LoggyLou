@@ -28,11 +28,11 @@ class SubmissionsController < ApplicationController
                           .joins(:project)
                           .select("projects.id, projects.name").distinct
 
-    worklogs = @submission.worklogs.order(log_date: :desc)
+    @worklogs = @submission.worklogs.includes(:project, :user).order(log_date: :asc)
 
     # Building the hash manually to ensure all dates are included (DO NOT USE groupdate, for some reason it ignores day 1)
     date_range = (@submission.period_start..@submission.period_end).to_a
-    hours_by_date = worklogs.group(:log_date).sum(:hours)
+    hours_by_date = @worklogs.group(:log_date).sum(:hours)
 
     @worklogs_by_day = date_range.each_with_object({}) do |date, hash|
       hash[date] = hours_by_date[date] || 0
