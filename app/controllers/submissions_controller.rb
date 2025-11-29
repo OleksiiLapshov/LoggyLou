@@ -108,7 +108,7 @@ class SubmissionsController < ApplicationController
             worklog.log_date.strftime("%Y-%m-%d"),
             worklog.user.full_name,
             worklog.hours.to_s,
-            worklog.note,
+            worklog.note.gsub(/\R+/, " "),
             worklog.project.name,
             worklog.project.company
           ]
