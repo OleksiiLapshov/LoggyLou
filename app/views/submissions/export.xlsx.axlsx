@@ -19,7 +19,7 @@ wb.add_worksheet(name: "Worklogs") do |sheet|
       worklog.log_date.strftime("%Y-%m-%d"), # Date
       worklog.user.full_name,                # Employee
       worklog.hours,                         # Hours (Keep as number for Excel math)
-      worklog.note,                          # Notes
+      worklog.note.gsub(/\R+/, " "),         # Notes
       worklog.project.name,                  # Project
       worklog.project.company                # Company
     ], types: [ :date, :string, :float, :string, :string ],
