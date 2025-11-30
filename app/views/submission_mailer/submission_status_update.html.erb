@@ -1,0 +1,14 @@
+<h1>Submission Status Changed</h1>
+
+<p>
+    Worklogs submission for the period <%= @submission.period_start %> to <%= @submission.period_end %>
+    was <strong><%= @status %><%= @status == "approved" ? "🤌" : "🥲" %></strong>
+</p>
+
+<p>
+    <strong>Note: </strong> <%= @submission.note %>
+</p>
+
+<p>
+  <%= link_to "Review Submission", submission_url(@submission) %>
+</p>

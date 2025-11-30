@@ -141,7 +141,7 @@ class WorklogsController < ApplicationController
         note:         "Submitted #{worklogs.sum(:hours)} hours for #{period_start.strftime('%B %Y')}"
       )
       worklogs.update_all(submission_id: submission.id)
-
+      SubmissionMailer.with(submission: submission).new_submission_notification.deliver_later
       redirect_to submissions_path,
               notice: "Timesheet submitted for #{period_start.strftime('%B %Y')}!"
   end
