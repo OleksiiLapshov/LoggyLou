@@ -36,7 +36,7 @@ class SubmissionsController < ApplicationController
   def reject
     if params[:note].present?
       @submission.update(status: :rejected, note: params[:note])
-      @submission.worklogs.update(submission_id: nil)
+      @submission.worklogs.update_all(submission_id: nil)
       redirect_to @submission, notice: "Submission rejected."
     else
       redirect_to @submission, alert: "Please provide a rejection note."
