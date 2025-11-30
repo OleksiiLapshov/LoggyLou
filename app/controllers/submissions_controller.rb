@@ -30,13 +30,7 @@ class SubmissionsController < ApplicationController
 
     @worklogs = @submission.worklogs.includes(:project, :user).order(log_date: :asc)
 
-    # Building the hash manually to ensure all dates are included (DO NOT USE groupdate, for some reason it ignores day 1)
-    date_range = (@submission.period_start..@submission.period_end).to_a
-    hours_by_date = @worklogs.group(:log_date).sum(:hours)
-
-    @worklogs_by_day = date_range.each_with_object({}) do |date, hash|
-      hash[date] = hours_by_date[date] || 0
-    end
+    @worklogs_by_day = @submission.chart_data
   end
 
   def reject
@@ -86,9 +80,10 @@ class SubmissionsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_submission
-      @submission = Submission.find(params.expect(:id))
-      unless current_user_admin? || @submission.user_id == current_user.id
-        redirect_to submissions_path, alert: "You are not authorized to view this submission."
+      if current_user_admin?
+        @submission = Submission.find(params.expect(:id))
+      else
+        @submission = current_user.submissions.find(params.expect(:id))
       end
     end
 
