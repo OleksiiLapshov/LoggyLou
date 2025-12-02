@@ -5,7 +5,20 @@
       <div class="flex items-center justify-between h-16">
         
         <div class="flex-shrink-0">
-          <%= link_to "Work-Log", root_path, class: "font-bold text-xl text-white dark:text-orange-500" %>
+        <%= link_to root_path, class: "flex items-center gap-3 group" do %>
+            
+            <%= image_tag "cozy-cat.png", 
+                alt: "Work-Log", 
+                class: "h-8 w-auto block dark:hidden transition-transform group-hover:scale-105" %>
+
+            <%= image_tag "dark-cat.png", 
+                alt: "Work-Log", 
+                class: "h-8 w-auto hidden dark:block transition-transform group-hover:scale-105" %>
+
+            <span class="font-bold text-xl text-white dark:text-orange-500">
+            Work-Log
+            </span>
+        <% end %>
         </div>
 
         <ul class="flex flex-wrap items-center justify-end gap-x-2 text-sm font-medium text-white dark:text-zinc-300">
