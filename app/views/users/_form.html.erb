@@ -27,6 +27,11 @@
         </div>
 
         <div class="flex gap-4 py-2 items-center">
+            <%= f.label :notification_email, class: "font-bold min-w-[120px]" %>
+            <%= f.email_field :notification_email, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
+        </div>
+
+        <div class="flex gap-4 py-2 items-center">
             <%= f.label :date_of_birth, class: "font-bold min-w-[120px]" %>
             <%= f.date_field :date_of_birth, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
         </div>

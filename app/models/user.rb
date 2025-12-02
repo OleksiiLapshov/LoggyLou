@@ -9,6 +9,7 @@ class User < ApplicationRecord
 
   validates :first_name, :last_name, presence: true
   validates :email, format: { with: /\S+@\S+/ }, uniqueness: { case_sensitive: false }
+  validates :notification_email, format: { with: /\S+@\S+/ }, uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 8 }, allow_nil: true
   validate :password_complexity
 

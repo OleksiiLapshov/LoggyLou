@@ -2,7 +2,7 @@ class SubmissionMailer < ApplicationMailer
   def new_submission_notification
     @submission = params[:submission]
     @user = @submission.user
-    @admin_emails = User.where(admin: true).pluck(:email)
+    @admin_emails = User.where(admin: true).pluck(:notification_email)
 
     mail(
       from: "no-reply@work-log.app",
@@ -15,11 +15,11 @@ class SubmissionMailer < ApplicationMailer
   def submission_status_update
     @submission = params[:submission]
     @status = @submission.status
-    @submitter_email = @submission.user.email
+    @user = @submission.user
 
     mail(
       from: "no-reply@work-log.app",
-      to: @submitter_email,
+      to: @user.notification_email,
       subject: "Submission Status Update"
     )
   end
