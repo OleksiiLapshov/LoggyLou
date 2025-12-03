@@ -21,7 +21,7 @@
         <% end %>
         </div>
 
-        <ul class="flex flex-wrap items-center justify-end gap-x-2 text-sm font-medium text-white dark:text-zinc-300">
+        <ul class="flex flex-wrap items-center justify-end gap-x-2 text-m font-medium text-white dark:text-zinc-300">
           
           <% if current_user %>
             <div class="flex items-center divide-x divide-white/30">
@@ -46,9 +46,11 @@
             </li>
 
           <% else %>
-            <li>
-              <%= link_to "Sign In", signin_path, class: "button-secondary" %>
-            </li>
+            <% if current_user %>
+              <li>
+                <%= link_to "Sign In", signin_path, class: "button-secondary" %>
+              </li>
+            <% end %>
           <% end %>
 
         </ul>

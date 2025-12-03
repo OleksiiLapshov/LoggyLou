@@ -22,12 +22,16 @@
 
     <% if !current_user_admin? %>
       <% if @worklogs.count > 0 %>
-        <%= link_to "Export CSV", 
-              export_worklogs_path(month: @selected_month, year: @selected_year, format: :csv),
-              class: "button-success" %>
-        <%= link_to "Export EXCEL", 
-              export_worklogs_path(month: @selected_month, year: @selected_year, format: :xlsx),
-              class: "button-success" %>
+        <%= link_to export_worklogs_path(month: @selected_month, year: @selected_year, format: :csv),
+              class: "button-success" do %>
+          <%= heroicon "document-text", variant: :solid, options: { class: "w-4 h-4" } %>
+          <span class="ml-1">Export CSV</span>
+        <% end %>      
+        <%= link_to export_worklogs_path(month: @selected_month, year: @selected_year, format: :xlsx),
+              class: "button-success" do %>
+          <%= heroicon "table-cells", variant: :solid, options: { class: "w-4 h-4" } %>
+          <span class="ml-1">Export Excel</span>
+        <% end %>
       <% end %>
 
       <% if @unsubmitted.sum(:hours) > 0 %>
@@ -56,7 +60,10 @@
   
   <% if !current_user_admin? %>
     <section class="mt-6">
-      <%= link_to "New worklog", new_worklog_path, class: "button-success" %>
+      <%= link_to new_worklog_path, class: "button-success" do %>
+        <%= heroicon "pencil-square", variant: :solid, options: { class: "w-4 h-4" } %>
+        <span class="ml-1">New Worklog</span>
+      <% end %>
     </section>
   <% end %>
 
@@ -64,7 +71,10 @@
 
   <% if !current_user_admin? %>
     <section class="mt-6">
-      <%= link_to "New worklog", new_worklog_path, class: "button-success" %>
+      <%= link_to new_worklog_path, class: "button-success" do %>
+        <%= heroicon "pencil-square", variant: :solid, options: { class: "w-4 h-4" } %>
+        <span class="ml-1">New Worklog</span>
+      <% end %>
     </section>
   <% end %>
 </div>
