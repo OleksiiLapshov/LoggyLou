@@ -36,13 +36,17 @@
             </div>
 
             <li class="ml-6">
-              <%= link_to current_user.first_name, user_path(current_user), class: "underline decoration-orange-300 underline-offset-4 hover:decoration-white transition" %>
+              <%= link_to user_path(current_user), class: "underline decoration-orange-300 underline-offset-4 hover:decoration-white transition" do %>
+                <%= icon_text("user-circle", current_user.first_name) %>
+              <% end %>
             </li>
             
             <li class="ml-4">
-              <%= link_to "Sign Out", session_path,
+              <%= link_to session_path,
                           data: { turbo_method: :delete },
-                          class: "button bg-white/10 hover:bg-white/20 border-none text-white" %>
+                          class: "button bg-white/10 hover:bg-white/20 border-none text-white" do %>
+                <%= icon_text("arrow-left-on-rectangle", "Sign Out") %>
+              <% end %>
             </li>
 
           <% else %>

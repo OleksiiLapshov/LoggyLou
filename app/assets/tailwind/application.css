@@ -9,7 +9,7 @@
     }
 
     .button {
-        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-bold rounded-md
+        @apply inline-flex items-center justify-center px-3 py-2 text-sm font-bold rounded-md
         text-white
         /* Light Mode */
         bg-orange-400 hover:bg-orange-500 
@@ -22,7 +22,7 @@
     }
 
     .button-secondary {
-        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-bold rounded-md
+        @apply inline-flex items-center justify-center px-3 py-2 text-sm font-bold rounded-md
            text-orange-700 bg-orange-100 hover:bg-orange-200 focus:outline-none focus:ring-2 
            focus:ring-orange-500 
            dark:bg-stone-600 dark:hover:bg-stone-900 dark:text-zinc-200 dark:border-stone-600
@@ -31,7 +31,7 @@
     }
 
     .button-outline {
-        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-bold rounded-md
+        @apply inline-flex items-center justify-center px-3 py-2 text-sm font-bold rounded-md
            text-orange-600 bg-transparent hover:bg-orange-50 focus:outline-none focus:ring-2 
            focus:ring-orange-500 focus:ring-offset-2 transition-colors duration-200 
            cursor-pointer no-underline border-2 border-orange-400 hover:border-orange-500;
@@ -46,14 +46,14 @@
     }
 
     .button-danger {
-        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-bold rounded-md
+        @apply inline-flex items-center justify-center px-3 py-2 text-sm font-bold rounded-md
            text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 
            focus:ring-red-500 focus:ring-offset-2 transition-colors duration-200 
            cursor-pointer no-underline;
     }
 
     .button-success {
-        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-bold rounded-md
+        @apply inline-flex items-center justify-center px-3 py-2 text-sm font-bold rounded-md
            text-zinc-100 bg-teal-500 hover:bg-teal-600 focus:ring-teal-300
            dark:bg-emerald-600 dark:hover:bg-emerald-800
            focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200 
@@ -61,9 +61,8 @@
     }
 
     .button-disabled {
-        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-bold rounded-md
-           text-zinc-500 bg-zinc-200 hover:bg-zinc-100 focus:outline-none focus:ring-2 
-           focus:ring-zinc-200 focus:ring-offset-2 transition-colors duration-200 
+        @apply inline-flex items-center justify-center px-3 py-2 text-sm font-bold rounded-md
+           text-zinc-300 bg-zinc-100 focus:outline-none focus:ring-2 focus:ring-offset-2
            cursor-pointer no-underline;
     }
 

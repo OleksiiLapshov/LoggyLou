@@ -2,21 +2,18 @@
     <div class="mini-form-card">
     <h1 class="h1-style">Sign In</h1>
         <%= form_with(url: session_path) do |f| %>
+        
             <div class="flex gap-4 py-2 items-center">
                 <%= f.label :email, class: "font-bold min-w-[120px]"  %>
                 <%= f.email_field :email, autofocus: true, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
             </div>
+
             <div class="flex gap-4 py-2 items-center">
                 <%= f.label :password, class: "font-bold min-w-[120px]"  %>
                 <%= f.password_field :password, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
             </div>
             
-            <%#= f.submit "Sign In", class: "button-success" %>
-            <%= button_tag(type: "submit", class: "button-success") do %>
-                <%= heroicon "arrow-right-on-rectangle", variant: :solid, options: { class: "w-4 h-4" } %>
-                <span class="ml-1">Sign In</span>
-            <% end %>
-
+            <%= login_button %>
         <% end %>
     </div>
 </div>

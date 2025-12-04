@@ -22,7 +22,7 @@
   <% end %>
 
   <div id="submission_actions" class="flex gap-x-3 pt-6">
-    <%= link_to "Back", submissions_path, class: "button-secondary" %>
+    <%= back_button %>
     
     <% if @submission.draft? && current_user_admin? %>
       <%= button_to "Approve", approve_submission_path(@submission), method: :patch, class: "button-success" %>

@@ -1,16 +1,16 @@
 <div class="form-card">
     <table class="table-fixed w-full border border-zinc-500 border-collapse">
     <thead class="text-lf font-bold">
-      <tr>
-        <td class="border border-zinc-500 py-2 px-3 w-32">Date</td>
+      <tr class="bg-zinc-200">
+        <th class="border border-zinc-500 py-2 px-3 w-32">Date</th>
         <% if current_user_admin? %>
-            <td class="border border-zinc-500 py-2 px-3 w-32">Employee</td>
+            <th class="border border-zinc-500 py-2 px-3 w-32">Employee</th>
         <% end %>
-        <td class="border border-zinc-500 py-2 px-3 w-18">Hours</td>
-        <td class="border border-zinc-500 py-2 px-3 w-48">Project</td>
-        <td class="border border-zinc-500 py-2 px-3">Notes</td>
+        <th class="border border-zinc-500 py-2 px-3 w-18">Hours</th>
+        <th class="border border-zinc-500 py-2 px-3 w-48">Project</th>
+        <th class="border border-zinc-500 py-2 px-3">Notes</th>
         <% if !current_user_admin? %>
-            <td class="border border-zinc-500 py-2 px-3 w-48">Actions</td>
+            <th class="border border-zinc-500 py-2 px-3 w-48">Actions</th>
         <% end %>
       </tr>
     </thead>
@@ -26,16 +26,20 @@
             <td class="border border-zinc-500 py-2 px-3"><%= worklog.project.name %></td>
             <td class="border border-zinc-500 py-2 px-3 truncate" title="<%= worklog.note %>"><%= worklog.note %></td>
             <% if !current_user_admin? %>
-                <td class="border border-zinc-500 py-2 px-3">
-                <div class="flex gap-1 justify-center">
-                    <%= button_to "View", worklog,
+                <td class="border border-zinc-500 py-2 px-2">
+                <div class="flex gap-2 justify-center">
+                    <%= button_to worklog,
                                 params: { month: params[:month], year: params[:year] }.compact_blank,
                                 method: :get,
-                                class: "button-secondary"%>
-                    <%= button_to "Edit", edit_worklog_path(worklog),
+                                class: "button-secondary" do%>
+                      <%= icon_text("eye", "View") %>
+                    <% end %>
+                    <%= button_to edit_worklog_path(worklog),
                                 method: :get,
                                 class: worklog.editable? ? "button" : "button-disabled", 
-                                disabled: !worklog.editable? %>
+                                disabled: !worklog.editable? do %>
+                      <%= icon_text("pencil", "Edit") %>
+                    <% end %>
                 </div>
                 </td>
             <% end %>
