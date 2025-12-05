@@ -7,13 +7,15 @@ class SubmissionsController < ApplicationController
   def index
     @selected_month = params[:month].presence&.to_i || Date.today.month
     @selected_year = params[:year].presence&.to_i || Date.today.year
+    @statuses = Submission.statuses
+    @status = params[:status].presence&.to_s || [ "draft", "approved", "rejected" ]
 
     first_day = Date.new(@selected_year, @selected_month, 1)
 
     if current_user_admin?
-      @submissions = Submission.includes(:user, :worklogs).where(period_start: first_day.all_month).order(created_at: :desc)
+      @submissions = Submission.includes(:user, :worklogs).where(period_start: first_day.all_month, status: @status).order(created_at: :desc)
     else
-      @submissions = current_user.submissions.includes(:worklogs).where(period_start: first_day.all_month).order(created_at: :desc)
+      @submissions = current_user.submissions.includes(:worklogs).where(period_start: first_day.all_month, status: @status).order(created_at: :desc)
     end
   end
 

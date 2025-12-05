@@ -16,6 +16,13 @@
           { selected: @selected_year },
           { class: "border border-zinc-500 rounded px-3 py-2 dark:bg-zinc-300" } %>
     </div>
+    <div>
+      <%= form.label :status, "Status:", class: "mr-2 font-bold" %>
+      <%= form.select :status, 
+          @statuses.keys.map { |s| [s.humanize, s] },
+          { include_blank: "All Statuses", selected: params[:status] },
+          { class: "border border-zinc-500 rounded px-3 py-2 dark:bg-zinc-300" } %>
+    </div>
 
     <%= filter_button %>
     <%= link_to submissions_path, class: "button-secondary" do %>
