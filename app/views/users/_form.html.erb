@@ -64,11 +64,26 @@
         <% end %>
         
         <div class="pt-6">
-            <%= link_to "Cancel", root_url, class: "button-secondary" %>
             <% if user.new_record? %>
-                <%= f.submit "Create Employee", class: "button-success" %>
+                <%= link_to  users_path, class: "button-secondary" do %>
+                    <%= icon_text("no-symbol", "Cancel") %>
+                <% end %>
+                <%= button_tag(type: "submit", class: "button-success") do %>
+                    <%= icon_text("user-plus", "Add Employee") %>
+                <% end %>
             <% else %>
-                <%= f.submit "Update Employee", class: "button-success" %>
+                <% if current_user_admin? %>
+                    <%= link_to  users_path, class: "button-secondary" do %>
+                        <%= icon_text("no-symbol", "Cancel") %>
+                    <% end %>
+                <% else %>
+                    <%= link_to  user_path(current_user), class: "button-secondary" do %>
+                        <%= icon_text("no-symbol", "Cancel") %>
+                    <% end %>
+                <% end %>
+                <%= button_tag(type: "submit", class: "button-success") do %>
+                    <%= icon_text("check-circle", "Save Changes") %>
+                <% end %>
             <% end %>
         </div>
     </div>
