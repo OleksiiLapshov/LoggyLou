@@ -7,14 +7,14 @@
       <%= form.select :month, 
             Date::MONTHNAMES.compact.map.with_index(1) { |name, i| [name, i] },
             { selected: @selected_month },
-            { class: "border border-zinc-500 rounded px-3 py-2" } %>
+            { class: "border border-zinc-500 rounded px-3 py-2  dark:bg-zinc-300" } %>
     </div>
     <div>
       <%= form.label :year, "Year:", class: "mr-2 font-bold" %>
       <%= form.select :year, 
           (Date.today.year - 2..Date.today.year + 1).to_a.reverse,
           { selected: @selected_year },
-          { class: "border border-zinc-500 rounded px-3 py-2" } %>
+          { class: "border border-zinc-500 rounded px-3 py-2  dark:bg-zinc-300" } %>
     </div>
 
     <%= filter_button %>
