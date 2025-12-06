@@ -40,7 +40,7 @@ class SubmissionsController < ApplicationController
       @submission.update(status: :rejected, note: params[:note])
       @submission.worklogs.update_all(submission_id: nil)
       if @submission.user.notification_email.presence
-        SubmissionMailer.with(submission: @submission).submission_status_update.deliver_now
+        SubmissionMailer.with(submission: @submission).submission_status_update.deliver_later
       end
       redirect_to @submission, notice: "Submission rejected."
     else
@@ -51,7 +51,7 @@ class SubmissionsController < ApplicationController
   def approve
     @submission.update(status: :approved)
     if @submission.user.notification_email.presence
-      SubmissionMailer.with(submission: @submission).submission_status_update.deliver_now
+      SubmissionMailer.with(submission: @submission).submission_status_update.deliver_later
     end
     redirect_to @submission, notice: "Submission approved."
   end
