@@ -23,4 +23,13 @@ class SubmissionMailer < ApplicationMailer
       subject: "Submission Status Update"
     )
   end
+
+  def submission_reminder_email
+    @user = params[:user]
+
+    mail(
+      to: @user.notification_email,
+      subject: "Reminder: Please submit your timesheet for #{Date.current.strftime('%B')}"
+    )
+  end
 end
