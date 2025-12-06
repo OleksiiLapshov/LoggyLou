@@ -7,6 +7,10 @@ image: izraphail/loggy_lou
 servers:
   web:
     - 0.0.0.0
+  job:
+    hosts:
+      - 0.0.0.0
+    cmd: bin/jobs
 
 proxy:
   ssl: true
