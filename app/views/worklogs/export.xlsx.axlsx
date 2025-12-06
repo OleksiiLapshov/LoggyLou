@@ -3,6 +3,7 @@ wb = xlsx_package.workbook
 wb.add_worksheet(name: "Worklogs") do |sheet|
 
   header_style = wb.styles.add_style(b: true)
+  decimal_style = wb.styles.add_style(num_fmt: 2)
 
   sheet.add_row [
     "Date",
@@ -21,7 +22,8 @@ wb.add_worksheet(name: "Worklogs") do |sheet|
       worklog.note.gsub(/\R+/, " "),         # Notes
       worklog.project.name,                  # Project
       worklog.project.company.name           # Company
-    ]
+    ], types: [ :date, :string, :float, :string, :string ],
+       style: [ nil, nil, decimal_style, nil, nil ]
   end
 
   sheet.add_row []
