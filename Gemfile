@@ -66,7 +66,7 @@ group :development do
   gem "letter_opener"
 end
 
-gem "tailwindcss-rails", "~> 4.3"
+gem "tailwindcss-rails", "~> 4.4"
 
 gem "csv"
 gem "caxlsx"
