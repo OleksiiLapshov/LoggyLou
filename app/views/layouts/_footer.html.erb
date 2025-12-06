@@ -8,9 +8,13 @@
     <div data-controller="theme" class="justify-end ml-auto pr-3">
         <button 
             data-action="click->theme#toggle" 
-            class="p-1 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+            class="p-1 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors shadow-2xl drop-shadow-2xl">
             
-            <span class="font-bold">Dark/Light 🌗</span>
+            <span class="font-bold flex">
+                <%= heroicon "sun", variant: :solid, options: { class: "w-4 h-4" } %>
+                <%= heroicon "arrows-up-down", variant: :solid, options: { class: "w-4 h-4" } %>
+                <%= heroicon "moon", variant: :solid, options: { class: "w-4 h-4" } %>
+            </span>
             
         </button>
     </div>

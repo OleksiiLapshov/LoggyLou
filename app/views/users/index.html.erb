@@ -1,26 +1,39 @@
 <div class="form-card">
     <h1 class="h1-style">Employees</h1>
-    <table class="table w-full border border-zinc-500 border-collapse">
-        <thead class="text-lf font-bold">
-            <td class="border border-zinc-500 py-2 px-3">Name</td>
-            <td class="border border-zinc-500 py-2 px-3">Email</td>
-            <td class="border border-zinc-500 py-2 px-3">DOB</td>
-            <td class="border border-zinc-500 py-2 px-3">Actions</td>
-        </thead>
-        <tbody>
-            <% @users.each do |u| %>
-                <tr>
-                    <td class="border border-zinc-500 py-2 px-3"><%= u.full_name %></td>
-                    <td class="border border-zinc-500 py-2 px-3"><%= u.email %></td>
-                    <td class="border border-zinc-500 py-2 px-3"><%= u.date_of_birth ? u.date_of_birth : "N/A" %></td>
-                    <td class="border border-zinc-500 py-2 px-3"><%= link_to "View", u, class: "button-secondary" %> <%= link_to "Edit", edit_user_path(u), class: "button" %></td>
-                </tr>
+        <div class="form-card">
+        <table class="table w-full border border-zinc-900 border-collapse">
+            <thead class="text-lf font-bold">
+                <td class="border border-zinc-900 py-2 px-3 w-46">Name</td>
+                <td class="border border-zinc-900 py-2 px-3 w-56">Email</td>
+                <td class="border border-zinc-900 py-2 px-3 w-56">Notification Email</td>
+                <td class="border border-zinc-900 py-2 px-3">DOB</td>
+                <td class="border border-zinc-900 py-2 px-3 w-48">Actions</td>
+            </thead>
+            <tbody>
+                <% @users.each do |u| %>
+                    <tr>
+                        <td class="border border-zinc-900 py-2 px-3"><%= u.full_name %></td>
+                        <td class="border border-zinc-900 py-2 px-3 truncate"><%= u.email %></td>
+                        <td class="border border-zinc-900 py-2 px-3 truncate"><%= u.notification_email || "N/A" %></td>
+                        <td class="border border-zinc-900 py-2 px-3"><%= u.date_of_birth ? u.date_of_birth : "N/A" %></td>
+                        <td class="border border-zinc-900 py-2 px-3">
+                            <%= link_to u, class: "button-secondary" do %>
+                                <%= icon_text("eye", "View") %>
+                            <% end %>
+                            <%= link_to edit_user_path(u), class: "button" do %>
+                                <%= icon_text("pencil", "Edit") %>
+                            <% end %>
+                        </td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+        <section class="mt-6">
+            <%= link_to new_user_path, class: "button-success" do %>
+                <%= icon_text("user-plus", "Register Employee") %>
             <% end %>
-        </tbody>
-    </table>
-    <section class="mt-6">
-        <%= link_to "Register New Employee", new_user_path, class: "button-success" %>
-    </section>
+        </section>
+    </div>
 </div>
 
 

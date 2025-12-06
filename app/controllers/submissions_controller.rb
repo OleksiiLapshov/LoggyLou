@@ -7,13 +7,15 @@ class SubmissionsController < ApplicationController
   def index
     @selected_month = params[:month].presence&.to_i || Date.today.month
     @selected_year = params[:year].presence&.to_i || Date.today.year
+    @statuses = Submission.statuses
+    @status = params[:status].presence&.to_s || [ "draft", "approved", "rejected" ]
 
     first_day = Date.new(@selected_year, @selected_month, 1)
 
     if current_user_admin?
-      @submissions = Submission.includes(:user, :worklogs).where(period_start: first_day.all_month).order(created_at: :desc)
+      @submissions = Submission.includes(:user, :worklogs).where(period_start: first_day.all_month, status: @status).order(created_at: :desc)
     else
-      @submissions = current_user.submissions.includes(:worklogs).where(period_start: first_day.all_month).order(created_at: :desc)
+      @submissions = current_user.submissions.includes(:worklogs).where(period_start: first_day.all_month, status: @status).order(created_at: :desc)
     end
   end
 
@@ -30,19 +32,16 @@ class SubmissionsController < ApplicationController
 
     @worklogs = @submission.worklogs.includes(:project, :user).order(log_date: :asc)
 
-    # Building the hash manually to ensure all dates are included (DO NOT USE groupdate, for some reason it ignores day 1)
-    date_range = (@submission.period_start..@submission.period_end).to_a
-    hours_by_date = @worklogs.group(:log_date).sum(:hours)
-
-    @worklogs_by_day = date_range.each_with_object({}) do |date, hash|
-      hash[date] = hours_by_date[date] || 0
-    end
+    @worklogs_by_day = @submission.chart_data
   end
 
   def reject
     if params[:note].present?
       @submission.update(status: :rejected, note: params[:note])
-      @submission.worklogs.update(submission_id: nil)
+      @submission.worklogs.update_all(submission_id: nil)
+      if @submission.user.notification_email.presence
+        SubmissionMailer.with(submission: @submission).submission_status_update.deliver_later
+      end
       redirect_to @submission, notice: "Submission rejected."
     else
       redirect_to @submission, alert: "Please provide a rejection note."
@@ -51,6 +50,9 @@ class SubmissionsController < ApplicationController
 
   def approve
     @submission.update(status: :approved)
+    if @submission.user.notification_email.presence
+      SubmissionMailer.with(submission: @submission).submission_status_update.deliver_later
+    end
     redirect_to @submission, notice: "Submission approved."
   end
 
@@ -86,9 +88,10 @@ class SubmissionsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_submission
-      @submission = Submission.find(params.expect(:id))
-      unless current_user_admin? || @submission.user_id == current_user.id
-        redirect_to submissions_path, alert: "You are not authorized to view this submission."
+      if current_user_admin?
+        @submission = Submission.find(params.expect(:id))
+      else
+        @submission = current_user.submissions.find(params.expect(:id))
       end
     end
 

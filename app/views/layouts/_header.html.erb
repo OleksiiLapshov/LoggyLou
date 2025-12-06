@@ -1,47 +1,64 @@
 <header>
-    <nav class="sticky z-10 flex top-0 bg-gradient-to-r bg-orange-400 dark:bg-slate-950">
-        <ul class="flex items-center justify-end ml-auto mr-6">
-            <% if current_user %>
-                <li>
-                    <%= link_to "Home", root_path, class: "menu-item" %>
-                </li>
-                <div class="h-8 w-px bg-gray-300"></div>
-                <li>
-                    <%= link_to "Timesheets", submissions_path, class: "menu-item" %>
-                </li>
-                <div class="h-8 w-px bg-gray-300"></div>
-                <li>
-                    <%= link_to "Worklogs", worklogs_path, class: "menu-item" %>
-                </li>
-                <% if current_user_admin? %>
-                    <div class="h-8 w-px bg-gray-300"></div>
-                    <li>
-                        <%= link_to "Projects", projects_path, class: "menu-item" %>
-                    </li>
-                <% end %>
-                <% if current_user_admin? %>
-                    <div class="h-8 w-px bg-gray-300"></div>
-                    <li>
-                        <%= link_to "Users", users_path, class: "menu-item" %>
-                    </li>
-                <% end %>
-                <div class="h-8 w-px bg-gray-300"></div>
+  <nav class="sticky top-0 z-50 w-full bg-gradient-to-r from-orange-400 to-orange-500 dark:from-slate-950 dark:to-slate-900 border-b border-white/10 shadow-md">
+    
+    <div class="mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <div class="flex-shrink-0">
+        <%= link_to root_path, class: "flex items-center gap-3 group" do %>
             
-                <% if current_user %>
-                    <li class="ml-10">
-                        <%= link_to current_user.first_name, user_path(current_user), class: "underline dark:text-zinc-200" %>
-                    </li>
-                    <li class="ml-6">
-                        <%= link_to "Sign Out", session_path,
-                                    data: { turbo_method: :delete},
-                                    class: "button" %>
-                    </li>
-                <% else %>
-                    <li class="ml-10 my-3">
-                        <%= link_to "Sign In", signin_path, class: "button-secondary" %>
-                    </li>
-                <% end%>
+            <%= image_tag "cozy-cat.png", 
+                alt: "Work-Log", 
+                class: "h-8 w-auto block dark:hidden transition-transform group-hover:scale-105" %>
+
+            <%= image_tag "dark-cat.png", 
+                alt: "Work-Log", 
+                class: "h-8 w-auto hidden dark:block transition-transform group-hover:scale-105" %>
+
+            <span class="font-bold text-xl text-white dark:text-zinc-200">
+            Work-Log
+            </span>
+        <% end %>
+        </div>
+
+        <ul class="flex flex-wrap items-center justify-end gap-x-2 text-m font-medium text-white dark:text-zinc-300">
+          
+          <% if current_user %>
+            <div class="flex items-center divide-x divide-white/30">
+                <%= nav_link "Home", root_path %>
+                <%= nav_link "Timesheets", submissions_path %>
+                <%= nav_link "Worklogs", worklogs_path %>
+                
+                <% if current_user_admin? %>
+                    <%= nav_link "Projects", projects_path %>
+                    <%= nav_link "Users", users_path %>
+                <% end %>
+            </div>
+
+            <li class="ml-6">
+              <%= link_to user_path(current_user), class: "underline decoration-orange-300 underline-offset-4 hover:decoration-white transition" do %>
+                <%= icon_text("user-circle", current_user.first_name) %>
+              <% end %>
+            </li>
+            
+            <li class="ml-4">
+              <%= link_to session_path,
+                          data: { turbo_method: :delete },
+                          class: "button bg-white/10 hover:bg-white/20 border-none text-white" do %>
+                <%= icon_text("arrow-left-on-rectangle", "Sign Out") %>
+              <% end %>
+            </li>
+
+          <% else %>
+            <% if current_user %>
+              <li>
+                <%= link_to "Sign In", signin_path, class: "button-secondary" %>
+              </li>
             <% end %>
+          <% end %>
+
         </ul>
-    </nav>
+      </div>
+    </div>
+  </nav>
 </header>

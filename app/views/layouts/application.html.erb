@@ -24,8 +24,11 @@
 
   <body class="flex flex-col min-h-screen bg-gradient-to-b from-[#f8e9ca] to-[#d9a673] bg-fixed dark:from-blue-950 dark:to-indigo-950">
     <%= render "layouts/header" %>
-
-    <%= render "layouts/alert" %>
+    <div id="flash-messages">
+      <%= render "layouts/flash" %>
+    </div>
+    <%# TODO: make this work when JS is disabled and Stimulus is unavailable (it works, but need general solution) %>
+    <%#= render "layouts/alert" %>
     <%= yield %>
     <br>
     <%= render "layouts/footer" %>

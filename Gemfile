@@ -62,6 +62,10 @@ group :test do
   gem "selenium-webdriver"
 end
 
+group :development do
+  gem "letter_opener"
+end
+
 gem "tailwindcss-rails", "~> 4.3"
 
 gem "csv"
@@ -70,3 +74,4 @@ gem "caxlsx_rails"
 gem "chartkick"
 gem "groupdate"
 gem "pg"
+gem "heroicon"
