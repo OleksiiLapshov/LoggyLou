@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_06_102616) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_06_145934) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -23,11 +23,28 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_06_102616) do
     t.index ["user_id"], name: "index_assignments_on_user_id"
   end
 
-  create_table "projects", force: :cascade do |t|
+  create_table "companies", force: :cascade do |t|
     t.string "name"
-    t.string "company"
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "postcode"
+    t.string "city"
+    t.string "country"
+    t.string "vat"
+    t.string "account_number"
+    t.string "contact_phone"
+    t.string "contact_email"
+    t.string "contact_person"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "company_id", null: false
+    t.index ["company_id"], name: "index_projects_on_company_id"
   end
 
   create_table "solid_cable_messages", force: :cascade do |t|
@@ -211,6 +228,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_06_102616) do
 
   add_foreign_key "assignments", "projects"
   add_foreign_key "assignments", "users"
+  add_foreign_key "projects", "companies"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_failed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

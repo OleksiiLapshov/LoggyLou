@@ -89,7 +89,7 @@ class WorklogsController < ApplicationController
     if current_user_admin?
       @worklogs = Worklog.where(log_date: selected_date.all_month).order(log_date: :asc)
     else
-      @worklogs = current_user.worklogs.where(log_date: selected_date.all_month).order(log_date: :asc)
+      @worklogs = current_user.worklogs.includes(project: :company).where(log_date: selected_date.all_month).order(log_date: :asc)
     end
 
     respond_to do |format|
@@ -177,7 +177,7 @@ class WorklogsController < ApplicationController
             worklog.hours.to_s,
             worklog.note.gsub(/\R+/, " "),
             worklog.project.name,
-            worklog.project.company
+            worklog.project.company.name
           ]
         end
 

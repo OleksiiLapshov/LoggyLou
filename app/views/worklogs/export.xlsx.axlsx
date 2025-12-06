@@ -20,7 +20,7 @@ wb.add_worksheet(name: "Worklogs") do |sheet|
       worklog.hours,                         # Hours (Keep as number for Excel math)
       worklog.note.gsub(/\R+/, " "),         # Notes
       worklog.project.name,                  # Project
-      worklog.project.company                # Company
+      worklog.project.company.name           # Company
     ]
   end
 

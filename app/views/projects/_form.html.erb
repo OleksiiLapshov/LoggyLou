@@ -16,10 +16,16 @@
     <%= form.text_field :name, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
   </div>
 
-  <div class="flex class my-2">
-    <%= form.label :company, style: "display: block", class: "font-bold min-w-[120px]"  %>
-    <%= form.text_field :company, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
-  </div>
+  <div class="flex gap-4 py-2">
+      <%= form.label :company_id, style: "display: block", class: "font-bold min-w-[120px]" %>
+      <%= form.collection_select :company_id, @companies, :id, :name, { prompt: "Select a Company" },
+      { class: "form-control rounded-sm border border-zinc-900 bg-zinc-200"} %>
+      <% if project.errors[:project].any? %>
+        <div class="text-red-600">
+          <%= project.errors[:project].first %>
+        </div>
+      <% end %>
+    </div>
 
   <div class="mt-2">
     <%= form.submit "Save", class: "button-success"  %>

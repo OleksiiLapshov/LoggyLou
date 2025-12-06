@@ -57,7 +57,7 @@ class SubmissionsController < ApplicationController
   end
 
   def export
-    @worklogs_to_export = @submission.worklogs.includes(:user, :project)
+    @worklogs_to_export = @submission.worklogs.includes(:user, project: :company)
     filename_addition = "_all"
 
     if params[:project_id].present?
@@ -113,7 +113,7 @@ class SubmissionsController < ApplicationController
             worklog.hours.to_s,
             worklog.note.gsub(/\R+/, " "),
             worklog.project.name,
-            worklog.project.company
+            worklog.project.company.name
           ]
         end
 
