@@ -30,7 +30,8 @@
                 <%= nav_link "Worklogs", worklogs_path %>
                 
                 <% if current_user_admin? %>
-                    <%= nav_link "Projects", projects_path %>
+                    <%#= nav_link "Projects", projects_path %>
+                    <%= nav_link "Companies", companies_path %>
                     <%= nav_link "Users", users_path %>
                 <% end %>
             </div>

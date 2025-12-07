@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  submission: one
+  project: one
+  user: one
+  hours: 9.99
+  inbound_rates: 9.99
+  outbound_rates: 9.99
+  period_start: 2025-12-07
+  period_end: 2025-12-07
+
+two:
+  submission: two
+  project: two
+  user: two
+  hours: 9.99
+  inbound_rates: 9.99
+  outbound_rates: 9.99
+  period_start: 2025-12-07
+  period_end: 2025-12-07

@@ -1,6 +1,7 @@
 class Project < ApplicationRecord
   has_many :worklogs, dependent: :destroy
   has_many :assignments, dependent: :destroy
+  has_many :rates
   belongs_to :company
 
   has_many :users, through: :assignments, source: :user

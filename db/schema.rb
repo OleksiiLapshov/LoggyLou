@@ -10,9 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_06_145934) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_07_083745) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "approved_works", force: :cascade do |t|
+    t.bigint "submission_id", null: false
+    t.bigint "project_id", null: false
+    t.bigint "user_id", null: false
+    t.decimal "hours", precision: 10, scale: 2
+    t.decimal "inbound_rate", precision: 10, scale: 2, default: "0.0", null: false
+    t.decimal "outbound_rate", precision: 10, scale: 2, default: "0.0", null: false
+    t.date "period_start"
+    t.date "period_end"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_approved_works_on_project_id"
+    t.index ["submission_id"], name: "index_approved_works_on_submission_id"
+    t.index ["user_id"], name: "index_approved_works_on_user_id"
+  end
 
   create_table "assignments", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -45,6 +61,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_06_145934) do
     t.datetime "updated_at", null: false
     t.bigint "company_id", null: false
     t.index ["company_id"], name: "index_projects_on_company_id"
+  end
+
+  create_table "rates", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.bigint "user_id", null: false
+    t.decimal "inbound_rate", precision: 10, scale: 2, default: "0.0", null: false
+    t.decimal "outbound_rate", precision: 10, scale: 2, default: "0.0", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id", "user_id"], name: "index_rates_on_project_id_and_user_id", unique: true
+    t.index ["project_id"], name: "index_rates_on_project_id"
+    t.index ["user_id"], name: "index_rates_on_user_id"
   end
 
   create_table "solid_cable_messages", force: :cascade do |t|
@@ -226,9 +254,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_06_145934) do
     t.index ["user_id"], name: "index_worklogs_on_user_id"
   end
 
+  add_foreign_key "approved_works", "projects"
+  add_foreign_key "approved_works", "submissions"
+  add_foreign_key "approved_works", "users"
   add_foreign_key "assignments", "projects"
   add_foreign_key "assignments", "users"
   add_foreign_key "projects", "companies"
+  add_foreign_key "rates", "projects"
+  add_foreign_key "rates", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_failed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

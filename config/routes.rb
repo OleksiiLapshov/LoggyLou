@@ -10,7 +10,14 @@ Rails.application.routes.draw do
   resources :users
   root "worklogs#index"
 
-  resources :projects
+  resources :companies do
+    resources :projects, only: [ :index, :new, :create ]
+  end
+
+  resources :projects, except: [ :index, :new, :create ] do
+    resources :rates
+  end
+
   resources :worklogs do
     collection do
       get :export

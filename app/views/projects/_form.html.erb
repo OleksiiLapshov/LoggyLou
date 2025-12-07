@@ -1,4 +1,5 @@
-<%= form_with(model: project) do |form| %>
+<% url = @project.new_record? && @project.company ? company_projects_path(@project.company) : @project %>
+<%= form_with(model: @project, url: url, class: "contents") do |form| %>
   <% if project.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>

@@ -14,7 +14,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/new
   def new
-    @project = Project.new
+    @project = Project.new(company_id: params[:company_id])
     @companies = Company.all
   end
 
@@ -56,7 +56,7 @@ class ProjectsController < ApplicationController
     @project.destroy!
 
     respond_to do |format|
-      format.html { redirect_to projects_path, notice: "Project was successfully destroyed.", status: :see_other }
+      format.html { redirect_to companies_path, notice: "Project was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
     end
   end

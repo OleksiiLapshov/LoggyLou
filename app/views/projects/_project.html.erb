@@ -6,7 +6,7 @@
 
   <p>
     <strong>Company:</strong>
-    <%= project.company.name %>
+    <%= link_to "#{project.company.name}", project.company, class: "underline" %>
   </p>
   <p>
     <strong>Assigned to:</strong>
