@@ -101,7 +101,7 @@ class SubmissionsController < ApplicationController
     end
 
     def generate_csv(worklogs)
-      require 'csv'
+      require "csv"
 
       CSV.generate(headers: true) do |csv|
         csv << [ "Date", "Employee", "Hours", "Notes", "Project", "Company" ]

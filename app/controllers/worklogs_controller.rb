@@ -1,5 +1,4 @@
 class WorklogsController < ApplicationController
-
   before_action :require_signin
   before_action :set_worklog, only: %i[ show edit update destroy ]
   skip_before_action :set_worklog, only: :submit_timesheet
@@ -94,7 +93,7 @@ class WorklogsController < ApplicationController
 
     respond_to do |format|
       format.csv do
-        send_data generate_csv(@worklogs), 
+        send_data generate_csv(@worklogs),
                   filename: "worklogs_#{@selected_year}_#{@selected_month.to_s.rjust(2, '0')}.csv",
                   type: "text/csv",
                   disposition: "attachment"
@@ -165,7 +164,7 @@ class WorklogsController < ApplicationController
     end
 
     def generate_csv(worklogs)
-      require 'csv'
+      require "csv"
 
       CSV.generate(headers: true) do |csv|
         csv << [ "Date", "Employee", "Hours", "Notes", "Project", "Company" ]
