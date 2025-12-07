@@ -5,6 +5,8 @@
   <%= render "form", project: @project %>
 
   <div class="mt-4">
-    <%= back_button %>
+    <%= link_to companies_url, class: "button-secondary" do %>
+      <%= icon_text("arrow-left", "Back to companies") %>
+    <% end %>
   </div>
 </div>

@@ -1,10 +1,11 @@
-<% url = @project.new_record? && @project.company ? company_projects_path(@project.company) : @project %>
-<%= form_with(model: @project, url: url, class: "contents") do |form| %>
-  <% if project.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+<% url = project.new_record? && project.company ? company_projects_path(project.company) : project %>
 
-      <ul>
+<%= form_with(model: project, url: url, class: "contents") do |form| %>
+  
+  <% if project.errors.any? %>
+    <div class="p-4 mb-4 bg-red-50 text-red-600 rounded-md border border-red-200">
+      <h2 class="font-bold text-sm mb-2"><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+      <ul class="list-disc pl-5 text-sm">
         <% project.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -12,23 +13,30 @@
     </div>
   <% end %>
 
-  <div class="flex">
-    <%= form.label :name, style: "display: block", class: "font-bold min-w-[120px]"  %>
-    <%= form.text_field :name, class: "rounded-sm border border-zinc-900 bg-zinc-200" %>
+  <div class="flex items-center gap-4 mb-4">
+    <%= form.label :name, class: "font-bold min-w-[120px]"  %>
+    <%= form.text_field :name, class: "rounded-sm border border-zinc-500 bg-white dark:bg-zinc-800 px-2 py-1" %>
   </div>
 
-  <div class="flex gap-4 py-2">
-      <%= form.label :company_id, style: "display: block", class: "font-bold min-w-[120px]" %>
-      <%= form.collection_select :company_id, @companies, :id, :name, { prompt: "Select a Company" },
-      { class: "form-control rounded-sm border border-zinc-900 bg-zinc-200"} %>
-      <% if project.errors[:project].any? %>
-        <div class="text-red-600">
-          <%= project.errors[:project].first %>
-        </div>
-      <% end %>
-    </div>
+  <div class="flex items-center gap-4 mb-4">
+    <% if project.company_id && project.new_record? %>
+      <%= form.hidden_field :company_id %>
+      
+      <span class="font-bold min-w-[120px]">Company</span>
+      <span class="text-gray-700 dark:text-gray-300 font-medium">
+        <%= project.company.name %>
+      </span>
+    
+    <% else %>
+      <%= form.label :company_id, class: "font-bold min-w-[120px]" %>
+      <%= form.collection_select :company_id, 
+            Company.order(:name), :id, :name, 
+            { prompt: "Select a Company" },
+            { class: "rounded-sm border border-zinc-500 bg-white dark:bg-zinc-800 px-2 py-1" } %>
+    <% end %>
+  </div>
 
-  <div class="mt-2">
-    <%= form.submit "Save", class: "button-success"  %>
+  <div class="mt-4">
+    <%= form.submit "Save Project", class: "button-success cursor-pointer" %>
   </div>
 <% end %>
