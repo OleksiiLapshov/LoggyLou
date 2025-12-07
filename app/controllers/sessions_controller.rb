@@ -11,10 +11,11 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       reset_session
       session[:user_id] = user.id
+      session[:last_seen_at] = Time.current
       redirect_to worklogs_url, notice: "Welcome back, #{user.first_name}!"
     else
       unless user
-        User.new(password: "placeholder").authenticate('invalid')
+        User.new(password: "placeholder").authenticate("invalid")
       end
       flash.now[:alert] = "Invalid email/password combination!"
       render :new, status: :unprocessable_entity
