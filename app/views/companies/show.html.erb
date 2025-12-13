@@ -1,4 +1,53 @@
-<div>
-  <h1 class="font-bold text-4xl">Companies#show</h1>
-  <p>Find me in app/views/companies/show.html.erb</p>
+<div class="form-card">
+<h1 class="h1-style">Company card</h1>
+  <div>
+    <div class="mini-form-card overflow-hidden shadow rounded-lg border">
+        <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">
+                Company profile
+            </h3>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500">
+              Details used for invoicing and legal/business communications
+            </p>
+
+        </div>
+        <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+            <dl class="sm:divide-y sm:divide-gray-200">
+                <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        Company name
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        <%= @company.name %>
+                    </dd>
+                </div>
+                <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        Contact email
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        <%= @company.contact_email || "N/A" %>
+                    </dd>
+                </div>
+                <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        Contact phone
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        <%= @company.contact_phone || "N/A" %>
+                    </dd>
+                </div>
+                <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        Address
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        <%= @company.address_lines.present? ? @company.address_lines : "N/A" %><br>
+                        <%= @company.city%>, <%= @company.country %> <%= @company.postcode %>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+  </div>
 </div>

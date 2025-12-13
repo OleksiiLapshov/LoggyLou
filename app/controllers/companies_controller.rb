@@ -6,6 +6,7 @@ class CompaniesController < ApplicationController
   end
 
   def show
+    @company = Company.find(params.expect(:id))
   end
 
   def new
