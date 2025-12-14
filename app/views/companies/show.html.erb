@@ -1,53 +1,100 @@
 <div class="form-card">
 <h1 class="h1-style">Company card</h1>
-  <div>
-    <div class="mini-form-card overflow-hidden shadow rounded-lg border">
-        <div class="px-4 py-5 sm:px-6">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">
+  <div class="flex gap-x-6">
+    <div class="form-card overflow-hidden shadow border">
+        <div class="px-4 mb-6 sm:px-6">
+            <h3 class="text-lg leading-6 font-medium text-zinc-900">
                 Company profile
             </h3>
-            <p class="mt-1 max-w-2xl text-sm text-gray-500">
+            <p class="mt-1 max-w-2xl text-sm text-zinc-500">
               Details used for invoicing and legal/business communications
             </p>
 
         </div>
-        <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-            <dl class="sm:divide-y sm:divide-gray-200">
+        <div class="border-t border-zinc-200 px-4 py-5 sm:p-0">
+            <dl class="sm:divide-y sm:divide-zinc-200 dark:divide-zinc-500">
                 <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">
+                    <dt class="text-sm font-medium text-zinc-500">
                         Company name
                     </dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                    <dd class="mt-1 text-sm text-zinc-900 sm:mt-0 sm:col-span-2">
                         <%= @company.name %>
                     </dd>
                 </div>
                 <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">
+                    <dt class="text-sm font-medium text-zinc-500">
                         Contact email
                     </dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                    <dd class="mt-1 text-sm text-zinc-900 sm:mt-0 sm:col-span-2">
                         <%= @company.contact_email || "N/A" %>
                     </dd>
                 </div>
                 <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">
+                    <dt class="text-sm font-medium text-zinc-500">
                         Contact phone
                     </dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                    <dd class="mt-1 text-sm text-zinc-900 sm:mt-0 sm:col-span-2">
                         <%= @company.contact_phone || "N/A" %>
                     </dd>
                 </div>
                 <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">
+                    <dt class="text-sm font-medium text-zinc-500">
                         Address
                     </dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                    <dd class="mt-1 text-sm text-zinc-900 sm:mt-0 sm:col-span-2">
                         <%= @company.address_lines.present? ? @company.address_lines : "N/A" %><br>
                         <%= @company.city%>, <%= @company.country %> <%= @company.postcode %>
                     </dd>
                 </div>
             </dl>
         </div>
+    </div>
+    <div class="form-card">
+      <h3 class="text-lg leading-6 font-medium text-gray-900">
+                Projects
+      </h3>
+      <p class="mt-1 max-w-2xl text-sm text-gray-500">
+        List of projects requested by the company
+      </p>
+      <table class="min-w-full divide-y divide-gray-200 mt-6 w-full">
+          <thead>
+              <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32 truncate">Name</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Consultants</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">Action</th>
+              </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+              <% @company.projects.each do |project| %>
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="w-32 truncate">
+                        <%= project.name %>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <% project.users.each do |user| %>
+                        <p class="underline"><%= link_to "#{user.first_name} #{user.last_name}", user %></p>
+                      <% end %>
+                    </td>
+                    <td class="px-4 py-2 whitespace-nowrap">
+                      <div class="gap-x-2">
+                        <%= button_to project_path(project),
+                                      method: :get,
+                                      class: "button mb-2" do %>
+                          <%= icon_text("eye", "Show") %>
+                        <% end %>
+                        <%= button_to edit_project_path(project),
+                                      method: :get,
+                                      class: "button-secondary" do %>
+                          <%= icon_text("pencil", "Edit") %>
+                        <% end %>
+                      </div>
+                    </td>
+                </tr>
+              <% end %>
+          </tbody>
+      </table>
     </div>
   </div>
 </div>

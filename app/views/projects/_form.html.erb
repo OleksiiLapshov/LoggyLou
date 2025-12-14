@@ -15,7 +15,7 @@
 
   <div class="flex items-center gap-4 mb-4">
     <%= form.label :name, class: "font-bold min-w-[120px]"  %>
-    <%= form.text_field :name, class: "rounded-sm border border-zinc-500 bg-white dark:bg-zinc-800 px-2 py-1" %>
+    <%= form.text_field :name, class: "rounded-sm border border-zinc-500 bg-white dark:bg-zinc-300 px-2 py-1" %>
   </div>
 
   <div class="flex items-center gap-4 mb-4">
@@ -23,7 +23,7 @@
       <%= form.hidden_field :company_id %>
       
       <span class="font-bold min-w-[120px]">Company</span>
-      <span class="text-gray-700 dark:text-gray-300 font-medium">
+      <span class="text-gray-700 dark:bg-zinc-300 font-medium">
         <%= project.company.name %>
       </span>
     
@@ -32,7 +32,7 @@
       <%= form.collection_select :company_id, 
             Company.order(:name), :id, :name, 
             { prompt: "Select a Company" },
-            { class: "rounded-sm border border-zinc-500 bg-white dark:bg-zinc-800 px-2 py-1" } %>
+            { class: "rounded-sm border border-zinc-500 bg-white dark:bg-zinc-300 px-2 py-1" } %>
     <% end %>
   </div>
 
