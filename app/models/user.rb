@@ -27,23 +27,23 @@ class User < ApplicationRecord
 
     # check for uppercase
     unless password.match?(/[A-Z]/)
-      errors.add :password, 'must include at least one uppercase letter'
+      errors.add :password, "must include at least one uppercase letter"
     end
 
     # check for lowercase
     unless password.match?(/[a-z]/)
-      errors.add :password, 'must include at least one lowercase letter'
+      errors.add :password, "must include at least one lowercase letter"
     end
 
     # check for digits
     unless password.match?(/[0-9]/)
-      errors.add :password, 'must include at least one digit'
+      errors.add :password, "must include at least one digit"
     end
 
     # check for special characters
     # crutch to avoid whitelist: this regex looks for anything that is NOT a letter or number
     unless password.match?(/[^a-zA-Z0-9]/)
-      errors.add :password, 'must include at least one special character'
+      errors.add :password, "must include at least one special character"
     end
   end
 end
