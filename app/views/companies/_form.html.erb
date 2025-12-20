@@ -1,0 +1,73 @@
+<%= form_with(model: company) do |form| %>
+    <% if company.errors.any? %>
+        <div class="p-4 mb-4 bg-red-50 text-red-600 rounded-md border border-red-200">
+            <h2 class="font-bold text-sm mb-2"><%= pluralize(company.errors.count, "error") %> prohibited this company from being saved:</h2>
+        </div>
+    <% end %>
+    <div class="flex items-center gap-4 mb-4">
+        <%= form.label :name, class: "font-bold min-w-[120px]"  %>
+        <%= form.text_field :name, class: "rounded-sm border border-zinc-500 bg-white dark:bg-zinc-300 px-2 py-1" %>
+    </div>
+
+    <div class="flex items-center gap-4 mb-4">
+        <%= form.label :address_line_1, class: "font-bold min-w-[120px]"  %>
+        <%= form.text_field :address_line_1, class: "rounded-sm border border-zinc-500 bg-white dark:bg-zinc-300 px-2 py-1" %>
+    </div>
+
+    <div class="flex items-center gap-4 mb-4">
+        <%= form.label :address_line_2, class: "font-bold min-w-[120px]"  %>
+        <%= form.text_field :address_line_2, class: "rounded-sm border border-zinc-500 bg-white dark:bg-zinc-300 px-2 py-1" %>
+    </div>
+
+    <div class="flex items-center gap-4 mb-4">
+        <%= form.label :postcode, class: "font-bold min-w-[120px]"  %>
+        <%= form.text_field :postcode, class: "rounded-sm border border-zinc-500 bg-white dark:bg-zinc-300 px-2 py-1" %>
+    </div>
+
+    <div class="flex items-center gap-4 mb-4">
+        <%= form.label :city, class: "font-bold min-w-[120px]"  %>
+        <%= form.text_field :city, class: "rounded-sm border border-zinc-500 bg-white dark:bg-zinc-300 px-2 py-1" %>
+    </div>
+
+    <div class="flex items-center gap-4 mb-4">
+        <%= form.label :country, class: "font-bold min-w-[120px]"  %>
+        <%= form.text_field :country, class: "rounded-sm border border-zinc-500 bg-white dark:bg-zinc-300 px-2 py-1" %>
+    </div>
+
+    <div class="flex items-center gap-4 mb-4">
+        <%= form.label :vat, class: "font-bold min-w-[120px]"  %>
+        <%= form.text_field :vat, class: "rounded-sm border border-zinc-500 bg-white dark:bg-zinc-300 px-2 py-1" %>
+    </div>
+
+    <div class="flex items-center gap-4 mb-4">
+        <%= form.label :account_number, class: "font-bold min-w-[120px]"  %>
+        <%= form.text_field :account_number, class: "rounded-sm border border-zinc-500 bg-white dark:bg-zinc-300 px-2 py-1" %>
+    </div>
+
+    <div class="flex items-center gap-4 mb-4">
+        <%= form.label :contact_phone, class: "font-bold min-w-[120px]"  %>
+        <%= form.text_field :contact_phone, class: "rounded-sm border border-zinc-500 bg-white dark:bg-zinc-300 px-2 py-1" %>
+    </div>
+
+    <div class="flex items-center gap-4 mb-4">
+        <%= form.label :contact_email, class: "font-bold min-w-[120px]"  %>
+        <%= form.text_field :contact_email, class: "rounded-sm border border-zinc-500 bg-white dark:bg-zinc-300 px-2 py-1" %>
+    </div>
+
+    <div class="flex items-center gap-4 mb-4">
+        <%= form.label :contact_person, class: "font-bold min-w-[120px]"  %>
+        <%= form.text_field :contact_person, class: "rounded-sm border border-zinc-500 bg-white dark:bg-zinc-300 px-2 py-1" %>
+    </div>
+    <div class="flex gap-x-4">
+        <% if company.new_record? %>
+            <div>
+                <%= form.submit "Create Company", class: "button-success cursor-pointer" %>
+            </div>
+        <% else %>
+            <div>
+                <%= form.submit "Update Company", class: "button-success cursor-pointer" %>
+            </div>
+        <% end %>
+        <%= back_button %>
+    </div>
+<% end %>
