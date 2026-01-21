@@ -38,3 +38,4 @@
 
 /config/credentials/production.key
 config/deploy.yml
+AGENTS.md

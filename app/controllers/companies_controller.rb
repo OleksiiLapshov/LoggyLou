@@ -10,12 +10,21 @@ class CompaniesController < ApplicationController
   end
 
   def new
+    @company = Company.new
   end
 
   def edit
+    @company = Company.find(params.expect(:id))
   end
 
   def create
+    @company = Company.new(company_params)
+
+    if @company.save
+      redirect_to companies_url, notice: "Company was successfully created."
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def update
@@ -26,6 +35,31 @@ class CompaniesController < ApplicationController
         format.html { render :edit, status: :unprocessable_entity }
       end
     end
+
+    @company = Company.find(params.expect(:id))
+    if @company.update(company_params)
+      redirect_to companies_url, notice: "Company was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def company_params
+    params.expect(company: [
+      :name,
+      :address_line_1,
+      :address_line_2,
+      :postcode,
+      :city,
+      :country,
+      :vat,
+      :account_number,
+      :contact_phone,
+      :contact_email,
+      :contact_person
+    ])
   end
 
 private
