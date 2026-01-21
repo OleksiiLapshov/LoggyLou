@@ -28,14 +28,6 @@ class CompaniesController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @company.update(company_params)
-        format.html { redirect_to @company, notice: "Company details were successfully updated.", status: :see_other }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-      end
-    end
-
     @company = Company.find(params.expect(:id))
     if @company.update(company_params)
       redirect_to companies_url, notice: "Company was successfully updated."
